@@ -12,59 +12,102 @@ from jmespath import search
 
 ####################Connection to database function
 def Connectdb():
-    def connect():
-        global con,mycursor
+    def submitdb():
+        global con, mycursor
         host = hostval.get()
         user = userval.get()
         password = passwordval.get()
         try:
-            connection = pymysql.connect(host=host, user=user, password=password)
+            con = pymysql.connect(host=host, user=user, password=password)
             mycursor = con.cursor()
-
         except:
-            messagebox.showerror('Notification', 'Data is Incorrect please try again')
+            messagebox.showerror('Notifications', 'Data is incorrect please try again', parent=dbroot)
             return
+        try:
+            strr = 'CREATE DATABASE IF NOT EXISTS studentmanagementsystem1'
+            mycursor.execute(strr)
+            strr = 'USE studentmanagementsystem1'
+            mycursor.execute(strr)
+            strr = '''
+               CREATE TABLE IF NOT EXISTS studentdata1(
+                   studid VARCHAR(10) NOT NULL,
+                   surname VARCHAR(20),
+                   firstname VARCHAR(20),
+                   birthdate CHAR(8),
+                   sex CHAR(1),
+                   PRIMARY KEY (studid)
+               )
+               '''
+            mycursor.execute(strr)
+            messagebox.showinfo('Notification', 'Database created and now you are connected to the database.',
+                                parent=dbroot)
+
+        except Exception as e:
+            messagebox.showerror('Error', f"Error while creating table: {e}", parent=dbroot)
+            return
+
+        dbroot.destroy()
 
     dbroot = Toplevel()
     dbroot.grab_set()
     dbroot.geometry('470x250+800+230')
     dbroot.iconbitmap()
-    dbroot.resizable(False,False)
-    dbroot.config(bg = 'white')
-    ##################Connect db labels
-    hostlabel = Label(dbroot,text = 'Enter Host ',bg='white',font=('arial',18),relief=GROOVE , width= 13, anchor= 'w')
-    hostlabel.place(x= 10, y = 10)
+    dbroot.resizable(False, False)
+    dbroot.config(bg='white')
+    # -------------------------------Connectdb Labels
+    hostlabel = Label(dbroot, text="Enter Host : ", bg='white', font=('arial', 18))
+    hostlabel.place(x=10, y=10)
 
-    userlabel = Label(dbroot, text='Enter Username  ', bg='white', font=('arial', 18 ), relief=GROOVE , width=13, anchor='w')
+    userlabel = Label(dbroot, text="Enter User : ", bg='white', font=('arial', 18))
     userlabel.place(x=10, y=70)
 
-    passwordlabel = Label(dbroot, text='Enter Password  ', bg='white', font=('arial', 18), relief=GROOVE , width=13, anchor='w')
+    passwordlabel = Label(dbroot, text="Enter Password : ", bg='white', font=('arial', 18))
     passwordlabel.place(x=10, y=130)
 
-    ###################connectordb entry
+    # -------------------------Connectdb Entry
     hostval = StringVar()
     userval = StringVar()
     passwordval = StringVar()
 
-    hostentry= Entry(dbroot, font=('arial', 15), textvariable= hostval)
-    hostentry.place(x = 220, y = 10)
+    hostentry = Entry(dbroot, font=('arial', 15, 'bold'), textvariable=hostval)
+    hostentry.place(x=250, y=10)
 
-    userentry = Entry(dbroot, font=('arial', 15),textvariable= userval)
-    userentry.place(x=220, y=70)
+    userentry = Entry(dbroot, font=('arial', 15, 'bold'), textvariable=userval)
+    userentry.place(x=250, y=70)
 
-    passwordentry = Entry(dbroot, font=('arial', 15),textvariable= passwordval)
-    passwordentry.place(x=220, y=130)
+    passwordentry = Entry(dbroot, font=('arial', 15, 'bold'), textvariable=passwordval)
+    passwordentry.place(x=250, y=130)
 
-    ###########Submit button / Connect to db
-    submitbutton = Button(dbroot,text = 'Submit', font = ('arial', 15, 'bold'), width=20, command = connect)
-    submitbutton.place(x = 110, y = 190)
+    # -------------------------------- Connectdb button
+    submitbutton = Button(dbroot, text='Submit', font=('arial', 15, 'bold'), bg='white', bd=5, width=20,
+                          activebackground='blue',
+                          activeforeground='white', command=submitdb)
+    submitbutton.place(x=150, y=190)
+
     dbroot.mainloop()
 #####################################
 
 def addstudent():
     def submitadd():
-        print('submit add')
-        print('student submit')
+        id = idval.get()
+        surname = surnameval.get()
+        firstname = firstnameval.get()
+        birthdate = birthdateval.get()
+        sex = sexval.get()
+        if id == "" or surname == "" or firstname == "" or birthdate == "" or sex == "":
+            messagebox.showerror('Error', 'All fields are required', parent=addroot)
+            return
+
+        try:
+            # Insert data into the studentdata1 table
+            strr = 'INSERT INTO studentdata1 (studid, surname, firstname, birthdate, sex) VALUES (%s, %s, %s, %s, %s)'
+            mycursor.execute(strr, (id, surname, firstname, birthdate, sex))
+            con.commit()
+            messagebox.showinfo('Notification', 'Student data added successfully', parent=addroot)
+            addroot.destroy()
+        except Exception as e:
+            messagebox.showerror('Error', f'Error while adding data: {e}', parent=addroot)
+
     addroot = Toplevel(master = DataEntryFrame)
     addroot.grab_set()
     addroot.geometry('480x380+100+100')
@@ -295,24 +338,24 @@ ShowDataFrame.place(x=450, y=80, width=680, height=550)
 
 ####showing the main data
 # Scrollbars
+# Adding main data view with scrollbars
 style = ttk.Style()
 style.configure('Treeview.Heading', font=('arial', 11, 'bold'))
-
 scroll_x = Scrollbar(ShowDataFrame, orient=HORIZONTAL)
 scroll_y = Scrollbar(ShowDataFrame, orient=VERTICAL)
-# Treeview widget with scrollbars
 studenttable = Treeview(ShowDataFrame, columns=('Student ID', 'Surname', 'First Name', 'Birthdate', 'Sex'),
                         yscrollcommand=scroll_y.set, xscrollcommand=scroll_x.set)
+
 scroll_x.pack(side=BOTTOM, fill=X)
 scroll_y.pack(side=RIGHT, fill=Y)
-
 scroll_x.config(command=studenttable.xview)
 scroll_y.config(command=studenttable.yview)
+
 studenttable.heading('Student ID', text='Student ID')
 studenttable.heading('Surname', text='Surname')
 studenttable.heading('First Name', text='First Name')
 studenttable.heading('Birthdate', text='Birthdate')
-studenttable.heading('Sex', text = 'Sex')
+studenttable.heading('Sex', text='Sex')
 studenttable.column('Student ID', width=100)
 studenttable.column('Surname', width=100)
 studenttable.column('First Name', width=100)
