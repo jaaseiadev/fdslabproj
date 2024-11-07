@@ -1,10 +1,13 @@
 from tkinter import *
 from tkinter import Toplevel
+from tkinter import messagebox
 import time
 from tokenize import String
 
+from jmespath import search
 
-####################Connection to database
+
+####################Connection to database function
 def Connectdb():
     dbroot = Toplevel()
     dbroot.grab_set()
@@ -42,6 +45,51 @@ def Connectdb():
     dbroot.mainloop()
 #####################################
 
+def addstudent():
+    addroot = Toplevel(master = DataEntryFrame)
+    addroot.grab_set()
+    addroot.geometry('470x380+100+100')
+    addroot.title('Student Manangement System')
+    addroot.config(bg = 'white')
+    addroot.iconbitmap()
+    addroot.resizable(False,False)
+    ########_________________________________add student labels
+    idlabel = Label(addroot,text='Enter ID : ',bg = 'white',font=('arial',18))
+    idlabel.place(x=10,y=10)
+
+    surnamelabel = Label(addroot, text='Enter Surname : ', bg='white', font=('arial', 18))
+    surnamelabel.place(x=10, y=70)
+
+    lastnamelabel = Label(addroot, text='Enter Lastname : ', bg='white', font=('arial', 18))
+    lastnamelabel.place(x=10, y=130)
+
+    birthdatelabel = Label(addroot, text='Enter Birthdate : ', bg='white', font=('arial', 18))
+    birthdatelabel.place(x=10, y=190)
+
+    sexlabel = Label(addroot, text='Enter Sex : ', bg='white', font=('arial', 18))
+    sexlabel.place(x=10, y=250)
+
+######--------------------------------------------->Student Entry
+    idval = StringVar()
+    identry = Entry(addroot, font=('arial', 15),textvariable=idval)
+    identry.place(x=250, y = 10)
+
+
+def searchstudent():
+    print('Student search')
+def deletestudent():
+    print('Student delete')
+def updatestudent():
+    print('Student update ')
+def showstudent():
+    print('Student show')
+def exportstudent():
+    print('Student export')
+def exitstudent():
+    res = messagebox.askyesnocancel('Notification ', 'Do you want to exit?')
+    if(res == True):
+        root.destroy()
+
 # Initialize Tkinter window
 root = Tk()
 root.title('Student Management System')
@@ -69,18 +117,47 @@ def IntroLabelTick():
     SliderLabel.after(200, IntroLabelTick)
 
 ######################################################################### Main frames
+
 DataEntryFrame = Frame(root, bg='white', relief=GROOVE, borderwidth=2)
 DataEntryFrame.place(x=10, y=80, width=400, height=600)
+frontlabel = Label(DataEntryFrame, text = 'Welcome', width= 25,font=('arial',20))
+frontlabel.pack(side=TOP,expand = TRUE)
 
+addbtn = Button(DataEntryFrame, text = '1. Add Student',width= 25,font=('arial',17), command= addstudent)
+addbtn.pack(side=TOP,expand = TRUE)
+
+searchbtn = Button(DataEntryFrame, text = '2. Search Student',width= 25,font=('arial',17), command= searchstudent)
+searchbtn.pack(side=TOP,expand = TRUE)
+
+deletebtn = Button(DataEntryFrame, text = '3. Delete Student',width= 25,font=('arial',17),command= deletestudent)
+deletebtn.pack(side=TOP,expand = TRUE)
+
+updatebtn = Button(DataEntryFrame, text = '4. Update Student',width= 25,font=('arial',17), command = updatestudent)
+updatebtn.pack(side=TOP,expand = TRUE)
+
+showallbtn = Button(DataEntryFrame, text = '5. Show All',width= 25,font=('arial',17),command= showstudent)
+showallbtn.pack(side=TOP,expand = TRUE)
+
+exportbtn = Button(DataEntryFrame, text = '6. Export Data',width= 25,font=('arial',17),command = exportstudent)
+exportbtn.pack(side=TOP,expand = TRUE)
+
+exitbtn = Button(DataEntryFrame, text = '7. Exit',width= 25,font=('arial',17), command= exitstudent)
+exitbtn.pack(side=TOP,expand = TRUE)
+
+
+
+#################Showing
 ShowDataFrame = Frame(root, bg='white', relief=GROOVE, borderwidth=2)
 ShowDataFrame.place(x=550, y=80, width=620, height=600)
+
 ########################################################################## Slider label
 SliderLabel = Label(root, text=ss, font=('arial', 30, 'bold'), relief=RIDGE, borderwidth=5, bg='pink')
 SliderLabel.place(x=260, y=0)
 
-######################################################################## Clock label with corrected syntax and placement
-############################################################################## Start the slider animation
+########################################################################Start the slider animation
 IntroLabelTick()
+
+
 ########################################## Connect database
 connectbutton = Button(root,text = 'Connect to Database', width= 20,font=('arial', 13, 'bold'), relief= RIDGE, borderwidth= 4, bd=6, bg= 'white',
                        activebackground='black', activeforeground= 'black', command=Connectdb)
