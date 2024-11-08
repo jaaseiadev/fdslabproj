@@ -66,8 +66,11 @@ def Connectdb():
 
     # -------------------------Connectdb Entry
     hostval = StringVar()
+    hostval.set('localhost')
     userval = StringVar()
+    userval.set('root')
     passwordval = StringVar()
+    passwordval.set('Shuthefuckup69')
 
     hostentry = Entry(dbroot, font=('arial', 15, 'bold'), textvariable=hostval)
     hostentry.place(x=250, y=10)
@@ -107,6 +110,14 @@ def addstudent():
             addroot.destroy()
         except Exception as e:
             messagebox.showerror('Error', f'Error while adding data: {e}', parent=addroot)
+        strr = 'SELECT * FROM studentdata1'
+        mycursor.execute(strr)
+        datas = mycursor.fetchall()
+        studenttable.delete(*studenttable.get_children())
+        for i in datas:
+            vv = [i[0], i[1], i[2], i[3], i[4]]
+            print(vv)
+            studenttable.insert('', END, values=vv)
 
     addroot = Toplevel(master = DataEntryFrame)
     addroot.grab_set()
@@ -158,9 +169,24 @@ def addstudent():
     submitbtn.place(x = 110, y = 310)
 
     addroot.mainloop()
+
+
 def searchstudent():
     def search():
-        print('search submit')
+        id = idval.get()
+        surname = surnameval.get()
+        firstname = firstnameval.get()
+        birthdate = birthdateval.get()
+        sex = sexval.get()
+        if(id != ''):
+            strr = 'SELECT *FROM studentdata1 where studid=%s'
+            mycursor.execute(strr,(id,))
+            datas = mycursor.fetchall()
+            studenttable.delete(*studenttable.get_children())
+            for i in datas:
+                vv = [i[0], i[1], i[2], i[3], i[4]]
+                print(vv)
+                studenttable.insert('', END, values=vv)
 
     searchroot = Toplevel(master=DataEntryFrame)
     searchroot.grab_set()
