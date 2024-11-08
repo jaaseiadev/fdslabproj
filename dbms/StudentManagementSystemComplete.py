@@ -1,16 +1,14 @@
 from tkinter import *
 from tkinter import Toplevel
 from tkinter import messagebox
-from tkinter.ttk import Treeview
+from tkinter.ttk import Treeview, Style
+import tkinter as tk
+import tkinter as tk
 from tkinter import ttk
 import pymysql
-import time
-from tokenize import String
-
-from jmespath import search
 
 
-####################Connection to database function
+# Function to connect to the database
 def Connectdb():
     def submitdb():
         global con, mycursor
@@ -51,20 +49,19 @@ def Connectdb():
     dbroot = Toplevel()
     dbroot.grab_set()
     dbroot.geometry('470x250+800+230')
-    dbroot.iconbitmap()
     dbroot.resizable(False, False)
-    dbroot.config(bg='white')
-    # -------------------------------Connectdb Labels
-    hostlabel = Label(dbroot, text="Enter Host : ", bg='white', font=('arial', 18))
+
+    # Connectdb Labels
+    hostlabel = ttk.Label(dbroot, text="Enter Host:")
     hostlabel.place(x=10, y=10)
 
-    userlabel = Label(dbroot, text="Enter User : ", bg='white', font=('arial', 18))
+    userlabel = ttk.Label(dbroot, text="Enter User:")
     userlabel.place(x=10, y=70)
 
-    passwordlabel = Label(dbroot, text="Enter Password : ", bg='white', font=('arial', 18))
+    passwordlabel = ttk.Label(dbroot, text="Enter Password:")
     passwordlabel.place(x=10, y=130)
 
-    # -------------------------Connectdb Entry
+    # Connectdb Entries
     hostval = StringVar()
     hostval.set('localhost')
     userval = StringVar()
@@ -72,24 +69,21 @@ def Connectdb():
     passwordval = StringVar()
     passwordval.set('Shuthefuckup69')
 
-    hostentry = Entry(dbroot, font=('arial', 15, 'bold'), textvariable=hostval)
+    hostentry = ttk.Entry(dbroot, textvariable=hostval)
     hostentry.place(x=250, y=10)
 
-    userentry = Entry(dbroot, font=('arial', 15, 'bold'), textvariable=userval)
+    userentry = ttk.Entry(dbroot, textvariable=userval)
     userentry.place(x=250, y=70)
 
-    passwordentry = Entry(dbroot, font=('arial', 15, 'bold'), textvariable=passwordval)
+    passwordentry = ttk.Entry(dbroot, textvariable=passwordval, show='*')
     passwordentry.place(x=250, y=130)
 
-    # -------------------------------- Connectdb button
-    submitbutton = Button(dbroot, text='Submit', font=('arial', 15, 'bold'), bg='white', bd=5, width=20,
-                          activebackground='blue',
-                          activeforeground='white', command=submitdb)
+    # Connectdb Button
+    submitbutton = ttk.Button(dbroot, text='Submit', command=submitdb)
     submitbutton.place(x=150, y=190)
 
     dbroot.mainloop()
-#####################################
-
+# Function to add a new student
 def addstudent():
     def submitadd():
         id = idval.get()
@@ -116,61 +110,59 @@ def addstudent():
         studenttable.delete(*studenttable.get_children())
         for i in datas:
             vv = [i[0], i[1], i[2], i[3], i[4]]
-            print(vv)
             studenttable.insert('', END, values=vv)
 
-    addroot = Toplevel(master = DataEntryFrame)
+    addroot = Toplevel(master=DataEntryFrame)
     addroot.grab_set()
     addroot.geometry('480x380+100+100')
-    addroot.title('Student Manangement System')
-    addroot.config(bg = 'white')
-    addroot.iconbitmap()
-    addroot.resizable(False,False)
-    ########_________________________________add student labels
-    idlabel = Label(addroot,text='Enter ID : ',bg = 'white',font=('arial',18))
-    idlabel.place(x=10,y=10)
+    addroot.title('Student Management System')
+    addroot.config(bg='white')
+    addroot.resizable(False, False)
 
-    surnamelabel = Label(addroot, text='Enter Surname : ', bg='white', font=('arial', 18))
+    # Add student labels
+    idlabel = ttk.Label(addroot, text='Enter ID:')
+    idlabel.place(x=10, y=10)
+
+    surnamelabel = ttk.Label(addroot, text='Enter Surname:')
     surnamelabel.place(x=10, y=70)
 
-    firstnamelabel = Label(addroot, text='Enter Firstname : ', bg='white', font=('arial', 18))
+    firstnamelabel = ttk.Label(addroot, text='Enter Firstname:')
     firstnamelabel.place(x=10, y=130)
 
-    birthdatelabel = Label(addroot, text='Enter Birthdate : ', bg='white', font=('arial', 18))
+    birthdatelabel = ttk.Label(addroot, text='Enter Birthdate:')
     birthdatelabel.place(x=10, y=190)
 
-    sexlabel = Label(addroot, text='Enter Sex : ', bg='white', font=('arial', 18))
+    sexlabel = ttk.Label(addroot, text='Enter Sex:')
     sexlabel.place(x=10, y=250)
 
-######--------------------------------------------->Student Entry
+    # Student Entry fields
     idval = StringVar()
     surnameval = StringVar()
     firstnameval = StringVar()
     birthdateval = StringVar()
     sexval = StringVar()
 
-    identry = Entry(addroot, font=('arial', 15),textvariable=idval)
-    identry.place(x=250, y = 10)
+    identry = ttk.Entry(addroot, textvariable=idval)
+    identry.place(x=250, y=10)
 
-    surnameentry = Entry(addroot, font=('arial', 15), textvariable= surnameval)
+    surnameentry = ttk.Entry(addroot, textvariable=surnameval)
     surnameentry.place(x=250, y=70)
 
-    firstnameentry = Entry(addroot, font=('arial', 15), textvariable= firstnameval)
+    firstnameentry = ttk.Entry(addroot, textvariable=firstnameval)
     firstnameentry.place(x=250, y=130)
 
-    birthdateentry = Entry(addroot, font=('arial', 15), textvariable=birthdateval)
+    birthdateentry = ttk.Entry(addroot, textvariable=birthdateval)
     birthdateentry.place(x=250, y=190)
 
-    sexentry = Entry(addroot, font=('arial', 15), textvariable=sexval)
+    sexentry = ttk.Entry(addroot, textvariable=sexval)
     sexentry.place(x=250, y=250)
 
-    ###submit button
-    submitbtn = Button(addroot,text = 'Submit', font = ('arial', 15, 'bold'), width=20, command = submitadd)
-    submitbtn.place(x = 110, y = 310)
+    # Submit button
+    submitbtn = ttk.Button(addroot, text='Submit', command=submitadd)
+    submitbtn.place(x=160, y=310)
 
     addroot.mainloop()
-
-
+# Function to search for a student
 def searchstudent():
     def search():
         id = idval.get()
@@ -178,197 +170,321 @@ def searchstudent():
         firstname = firstnameval.get()
         birthdate = birthdateval.get()
         sex = sexval.get()
-        if(id != ''):
-            strr = 'SELECT *FROM studentdata1 where studid=%s'
-            mycursor.execute(strr,(id,))
+        if (id != ''):
+            strr = 'SELECT * FROM studentdata1 where studid=%s'
+            mycursor.execute(strr, (id,))
             datas = mycursor.fetchall()
             studenttable.delete(*studenttable.get_children())
             for i in datas:
                 vv = [i[0], i[1], i[2], i[3], i[4]]
-                print(vv)
                 studenttable.insert('', END, values=vv)
+        elif (surname != ''):
+            strr = 'SELECT * FROM studentdata1 where surname=%s'
+            mycursor.execute(strr, (surname,))
+            datas = mycursor.fetchall()
+            studenttable.delete(*studenttable.get_children())
+            for i in datas:
+                vv = [i[0], i[1], i[2], i[3], i[4]]
+                studenttable.insert('', END, values=vv)
+        elif (firstname != ''):
+            strr = 'SELECT * FROM studentdata1 where firstname=%s'
+            mycursor.execute(strr, (firstname,))
+            datas = mycursor.fetchall()
+            studenttable.delete(*studenttable.get_children())
+            for i in datas:
+                vv = [i[0], i[1], i[2], i[3], i[4]]
+                studenttable.insert('', END, values=vv)
+        elif (birthdate != ''):
+            strr = 'SELECT * FROM studentdata1 where birthdate=%s'
+            mycursor.execute(strr, (birthdate,))
+            datas = mycursor.fetchall()
+            studenttable.delete(*studenttable.get_children())
+            for i in datas:
+                vv = [i[0], i[1], i[2], i[3], i[4]]
+                studenttable.insert('', END, values=vv)
+        elif (sex != ''):
+            strr = 'SELECT * FROM studentdata1 where sex=%s'
+            mycursor.execute(strr, (sex,))
+            datas = mycursor.fetchall()
+            studenttable.delete(*studenttable.get_children())
+            for i in datas:
+                vv = [i[0], i[1], i[2], i[3], i[4]]
+                studenttable.insert('', END, values=vv)
+
 
     searchroot = Toplevel(master=DataEntryFrame)
     searchroot.grab_set()
     searchroot.geometry('480x380+100+100')
-    searchroot.title('Student Manangement System')
+    searchroot.title('Student Management System')
     searchroot.config(bg='white')
-    searchroot.iconbitmap()
     searchroot.resizable(False, False)
-    ########_________________________________add student labels
-    idlabel = Label(searchroot, text='Enter ID : ', bg='white', font=('arial', 18))
+
+    # Search student labels
+    idlabel = ttk.Label(searchroot, text='Enter ID:')
     idlabel.place(x=10, y=10)
 
-    surnamelabel = Label(searchroot, text='Enter Surname : ', bg='white', font=('arial', 18))
+    surnamelabel = ttk.Label(searchroot, text='Enter Surname:')
     surnamelabel.place(x=10, y=70)
 
-    firstnamelabel = Label(searchroot, text='Enter Firstname : ', bg='white', font=('arial', 18))
+    firstnamelabel = ttk.Label(searchroot, text='Enter Firstname:')
     firstnamelabel.place(x=10, y=130)
 
-    birthdatelabel = Label(searchroot, text='Enter Birthdate : ', bg='white', font=('arial', 18))
+    birthdatelabel = ttk.Label(searchroot, text='Enter Birthdate:')
     birthdatelabel.place(x=10, y=190)
 
-    sexlabel = Label(searchroot, text='Enter Sex : ', bg='white', font=('arial', 18))
+    sexlabel = ttk.Label(searchroot, text='Enter Sex:')
     sexlabel.place(x=10, y=250)
 
-    ######--------------------------------------------->Student Entry
+    # Student entry fields
     idval = StringVar()
     surnameval = StringVar()
     firstnameval = StringVar()
     birthdateval = StringVar()
     sexval = StringVar()
 
-    identry = Entry(searchroot, font=('arial', 15), textvariable=idval)
+    identry = ttk.Entry(searchroot, textvariable=idval)
     identry.place(x=250, y=10)
 
-    surnameentry = Entry(searchroot, font=('arial', 15), textvariable=surnameval)
+    surnameentry = ttk.Entry(searchroot, textvariable=surnameval)
     surnameentry.place(x=250, y=70)
 
-    firstnameentry = Entry(searchroot, font=('arial', 15), textvariable=firstnameval)
+    firstnameentry = ttk.Entry(searchroot, textvariable=firstnameval)
     firstnameentry.place(x=250, y=130)
 
-    birthdateentry = Entry(searchroot, font=('arial', 15), textvariable=birthdateval)
+    birthdateentry = ttk.Entry(searchroot, textvariable=birthdateval)
     birthdateentry.place(x=250, y=190)
 
-    sexentry = Entry(searchroot, font=('arial', 15), textvariable=sexval)
+    sexentry = ttk.Entry(searchroot, textvariable=sexval)
     sexentry.place(x=250, y=250)
 
-    ###submit button
-    submitbtn = Button(searchroot, text='Search', font=('arial', 15, 'bold'), width=20, command=search)
-    submitbtn.place(x=110, y=310)
+    # Search button
+    submitbtn = ttk.Button(searchroot, text='Search', command=search)
+    submitbtn.place(x=160, y=310)
 
     searchroot.mainloop()
+# Delete Function
 def deletestudent():
-    print('Student delete')
+    try:
+        # Get the selected item
+        cc = studenttable.focus()
+        if not cc:  # Check if focus returned an item
+            messagebox.showerror('Error', 'No student selected for deletion')
+            return
+
+        content = studenttable.item(cc)
+        pp = content.get('values', [])
+
+        if not pp:
+            messagebox.showerror('Error', 'No student selected for deletion')
+            return
+
+        studid_to_delete = pp[0]
+
+        # Ensure the student ID is a valid string and within expected length
+        if not isinstance(studid_to_delete, (str, int)):
+            messagebox.showerror('Error', 'Invalid student ID format')
+            return
+
+        # Perform the deletion
+        strr = 'DELETE FROM studentdata1 WHERE studid=%s'
+        mycursor.execute(strr, (str(studid_to_delete),))
+        con.commit()
+        messagebox.showinfo('Notifications', f'StudentID {studid_to_delete} deleted successfully')
+
+        # Refresh the table
+        strr = 'SELECT * FROM studentdata1'
+        mycursor.execute(strr)
+        datas = mycursor.fetchall()
+        studenttable.delete(*studenttable.get_children())
+        for i in datas:
+            vv = [i[0], i[1], i[2], i[3], i[4]]
+            studenttable.insert('', END, values=vv)
+
+    except IndexError:
+        messagebox.showerror('Error', 'No student selected for deletion')
+    except (pymysql.MySQLError, ValueError, TypeError) as e:
+        messagebox.showerror('Error', f'Error while deleting data: {e}')
+    except Exception as e:
+        messagebox.showerror('Error', f'An unexpected error occurred: {e}')
+#Update Function
 def updatestudent():
     def update():
-        print('search submit')
+        old_id = original_id.get()
+        new_id = idval.get()
+        surname = surnameval.get()
+        firstname = firstnameval.get()
+        birthdate = birthdateval.get()
+        sex = sexval.get()
+
+        if not new_id:
+            messagebox.showerror('Error', 'Student ID cannot be empty', parent=updateroot)
+            return
+
+        try:
+            strr = 'UPDATE studentdata1 SET studid=%s, surname=%s, firstname=%s, birthdate=%s, sex=%s WHERE studid=%s'
+            mycursor.execute(strr, (new_id, surname, firstname, birthdate, sex, old_id))
+            con.commit()
+            messagebox.showinfo('Notifications', 'StudentID {} updated successfully to {}'.format(old_id, new_id))
+
+            # Refresh the table
+            strr = 'SELECT * FROM studentdata1'
+            mycursor.execute(strr)
+            datas = mycursor.fetchall()
+            studenttable.delete(*studenttable.get_children())
+            for i in datas:
+                vv = [i[0], i[1], i[2], i[3], i[4]]
+                studenttable.insert('', END, values=vv)
+        except Exception as e:
+            messagebox.showerror('Error', f'Error while updating data: {e}', parent=updateroot)
+
+    def check_selection():
+        cc = studenttable.focus()
+        content = studenttable.item(cc)
+        pp = content['values']
+        if len(pp) == 0:
+            update_button.configure(state=tk.DISABLED)
+            idval.set('')
+            surnameval.set('')
+            firstnameval.set('')
+            birthdateval.set('')
+            sexval.set('')
+            messagebox.showerror('Error', 'Please select a student to update.', parent=updateroot)
+        else:
+            update_button.configure(state=tk.NORMAL)
+            original_id.set(pp[0])  # Store original student ID
+            idval.set(pp[0])
+            surnameval.set(pp[1])
+            firstnameval.set(pp[2])
+            birthdateval.set(pp[3])
+            sexval.set(pp[4])
 
     updateroot = Toplevel(master=DataEntryFrame)
     updateroot.grab_set()
     updateroot.geometry('480x380+100+100')
-    updateroot.title('Student Manangement System')
+    updateroot.title('Student Management System')
     updateroot.config(bg='white')
-    updateroot.iconbitmap()
     updateroot.resizable(False, False)
-    ########_________________________________add student labels
-    idlabel = Label(updateroot, text='Enter ID : ', bg='white', font=('arial', 18))
-    idlabel.place(x=10, y=10)
 
-    surnamelabel = Label(updateroot, text='Enter Surname : ', bg='white', font=('arial', 18))
-    surnamelabel.place(x=10, y=70)
+    original_id = StringVar()  # Variable to store the original student ID
 
-    firstnamelabel = Label(updateroot, text='Enter Firstname : ', bg='white', font=('arial', 18))
-    firstnamelabel.place(x=10, y=130)
+    # Update student labels
+    ttk.Label(updateroot, text='Enter ID:').place(x=10, y=10)
+    ttk.Label(updateroot, text='Enter Surname:').place(x=10, y=70)
+    ttk.Label(updateroot, text='Enter Firstname:').place(x=10, y=130)
+    ttk.Label(updateroot, text='Enter Birthdate:').place(x=10, y=190)
+    ttk.Label(updateroot, text='Enter Sex:').place(x=10, y=250)
 
-    birthdatelabel = Label(updateroot, text='Enter Birthdate : ', bg='white', font=('arial', 18))
-    birthdatelabel.place(x=10, y=190)
-
-    sexlabel = Label(updateroot, text='Enter Sex : ', bg='white', font=('arial', 18))
-    sexlabel.place(x=10, y=250)
-
-    ######--------------------------------------------->Student Entry
+    # Student entry fields
     idval = StringVar()
     surnameval = StringVar()
     firstnameval = StringVar()
     birthdateval = StringVar()
     sexval = StringVar()
 
-    identry = Entry(updateroot, font=('arial', 15), textvariable=idval)
-    identry.place(x=250, y=10)
+    ttk.Entry(updateroot, textvariable=idval).place(x=250, y=10)
+    ttk.Entry(updateroot, textvariable=surnameval).place(x=250, y=70)
+    ttk.Entry(updateroot, textvariable=firstnameval).place(x=250, y=130)
+    ttk.Entry(updateroot, textvariable=birthdateval).place(x=250, y=190)
+    ttk.Entry(updateroot, textvariable=sexval).place(x=250, y=250)
 
-    surnameentry = Entry(updateroot, font=('arial', 15), textvariable=surnameval)
-    surnameentry.place(x=250, y=70)
+    # Update button
+    update_button = ttk.Button(updateroot, text='Update', command=update)
+    update_button.place(x=160, y=310)
 
-    firstnameentry = Entry(updateroot, font=('arial', 15), textvariable=firstnameval)
-    firstnameentry.place(x=250, y=130)
-
-    birthdateentry = Entry(updateroot, font=('arial', 15), textvariable=birthdateval)
-    birthdateentry.place(x=250, y=190)
-
-    sexentry = Entry(updateroot, font=('arial', 15), textvariable=sexval)
-    sexentry.place(x=250, y=250)
-
-    ###submit button
-    submitbtn = Button(updateroot, text='Update', font=('arial', 15, 'bold'), width=20, command=update)
-    submitbtn.place(x=110, y=310)
+    # Check if a student is selected before enabling the 'Update' button
+    check_selection()
 
     updateroot.mainloop()
+#Show the tables
 def showstudent():
-    print('Student show')
+    try:
+        strr = 'SELECT * FROM studentdata1'
+        mycursor.execute(strr)
+        datas = mycursor.fetchall()
+        studenttable.delete(*studenttable.get_children())
+        if not datas:
+            messagebox.showinfo('Information', 'No student data available in the database.')
+            return
+        for i in datas:
+            vv = [i[0], i[1], i[2], i[3], i[4]]
+            studenttable.insert('', END, values=vv)
+    except Exception as e:
+        messagebox.showerror('Error', f'Error while fetching data: {e}')
+ 
 def exportstudent():
     print('Student export')
+
+
 def exitstudent():
-    res = messagebox.askyesnocancel('Notification ', 'Do you want to exit?')
-    if(res == True):
+    res = messagebox.askyesnocancel('Notification', 'Do you want to exit?')
+    if (res == True):
         root.destroy()
 
+
 # Initialize Tkinter window
-root = Tk()
+root = tk.Tk()
 root.title('Student Management System')
-root.config(bg='white')
-root.geometry('1175x1000+300+10')
-root.iconbitmap()  # If you have an icon, provide the path like root.iconbitmap('path_to_icon.ico')
+root.geometry('1175x700+300+10')
 root.resizable(False, False)
 
+root.tk.call("source", "forest-light.tcl")
+ttk.Style().theme_use('forest-light')
+
 # Variables for the slider
-ss = 'Jaaseia Gian R Abenoja  '
-count = 0  # Initial count for character position in slider text
-text = ''  # Initial text for the slider display
+ss = 'Student Management System '
+count = 0
+text = ''
+
 
 # Function for the slider effect
 def IntroLabelTick():
     global count, text
     if count >= len(ss):
         count = 0
-        text = ''  # Reset text when the end of the string is reached
-        SliderLabel.config(text = text);
+        text = ''
     else:
         text += ss[count]
-        SliderLabel.config(text=text)
         count += 1
+    SliderLabel.config(text=text)
     SliderLabel.after(200, IntroLabelTick)
-######################################################################### Main frames
 
-DataEntryFrame = Frame(root, bg='white', relief=GROOVE, borderwidth=2)
+
+# Main frames
+DataEntryFrame = Frame(root, bg='gray', relief=GROOVE, borderwidth=2)
 DataEntryFrame.place(x=10, y=80, width=360, height=550)
-frontlabel = Label(DataEntryFrame, text = 'Welcome', width= 25,font=('arial',20))
-frontlabel.pack(side=TOP,expand = TRUE)
 
-addbtn = Button(DataEntryFrame, text = '1. Add Student',width= 25,font=('arial',17), command= addstudent)
-addbtn.pack(side=TOP,expand = TRUE)
+frontlabel = Label(DataEntryFrame, text='Main Menu', font=("Arial", 16, "bold"))
+frontlabel.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-searchbtn = Button(DataEntryFrame, text = '2. Search Student',width= 25,font=('arial',17), command= searchstudent)
-searchbtn.pack(side=TOP,expand = TRUE)
+addbtn = ttk.Button(DataEntryFrame, text='1. Add Student', command=addstudent)
+addbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-deletebtn = Button(DataEntryFrame, text = '3. Delete Student',width= 25,font=('arial',17),command= deletestudent)
-deletebtn.pack(side=TOP,expand = TRUE)
+searchbtn = ttk.Button(DataEntryFrame, text='2. Search Student', command=searchstudent)
+searchbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-updatebtn = Button(DataEntryFrame, text = '4. Update Student',width= 25,font=('arial',17), command = updatestudent)
-updatebtn.pack(side=TOP,expand = TRUE)
+deletebtn = ttk.Button(DataEntryFrame, text='3. Delete Student', command=deletestudent)
+deletebtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-showallbtn = Button(DataEntryFrame, text = '5. Show All',width= 25,font=('arial',17),command= showstudent)
-showallbtn.pack(side=TOP,expand = TRUE)
+updatebtn = ttk.Button(DataEntryFrame, text='4. Update Student', command=updatestudent)
+updatebtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-exportbtn = Button(DataEntryFrame, text = '6. Export Data',width= 25,font=('arial',17),command = exportstudent)
-exportbtn.pack(side=TOP,expand = TRUE)
+showallbtn = ttk.Button(DataEntryFrame, text='5. Show All', command=showstudent)
+showallbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-exitbtn = Button(DataEntryFrame, text = '7. Exit',width= 25,font=('arial',17), command= exitstudent)
-exitbtn.pack(side=TOP,expand = TRUE)
+exportbtn = ttk.Button(DataEntryFrame, text='6. Export Data', command=exportstudent)
+exportbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
+exitbtn = ttk.Button(DataEntryFrame, text='7. Exit', command=exitstudent)
+exitbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-
-#################Showing the main frames
+# Show Data Frame
 ShowDataFrame = Frame(root, bg='white', relief=GROOVE, borderwidth=2)
 ShowDataFrame.place(x=450, y=80, width=680, height=550)
 
-####showing the main data
 # Scrollbars
-# Adding main data view with scrollbars
-style = ttk.Style()
-style.configure('Treeview.Heading', font=('arial', 11, 'bold'))
 scroll_x = Scrollbar(ShowDataFrame, orient=HORIZONTAL)
 scroll_y = Scrollbar(ShowDataFrame, orient=VERTICAL)
+
 studenttable = Treeview(ShowDataFrame, columns=('Student ID', 'Surname', 'First Name', 'Birthdate', 'Sex'),
                         yscrollcommand=scroll_y.set, xscrollcommand=scroll_x.set)
 
@@ -382,29 +498,26 @@ studenttable.heading('Surname', text='Surname')
 studenttable.heading('First Name', text='First Name')
 studenttable.heading('Birthdate', text='Birthdate')
 studenttable.heading('Sex', text='Sex')
+
 studenttable.column('Student ID', width=100)
 studenttable.column('Surname', width=100)
 studenttable.column('First Name', width=100)
 studenttable.column('Birthdate', width=100)
 studenttable.column('Sex', width=100)
+
 studenttable['show'] = 'headings'
 studenttable.pack(fill=BOTH, expand=1)
 
+# Slider label
+SliderLabel = ttk.Label(root, text=ss, font=('arial', 30, 'bold'))
+SliderLabel.place(x=290, y=0)
 
-
-
-
-########################################################################## Slider label
-SliderLabel = Label(root, text=ss, font=('arial', 30, 'bold'), relief=RIDGE, borderwidth=5, bg='pink')
-SliderLabel.place(x=260, y=0)
-
-#######################################Start the slider animation
+# Start the slider animation
 IntroLabelTick()
-#######################################
 
-########################################## Connect database
-connectbutton = Button(root,text = 'Connect to Database', width= 20,font=('arial', 13, 'bold'), relief= RIDGE, borderwidth= 4, bd=6, bg= 'white',
-                       activebackground='black', activeforeground= 'black', command=Connectdb)
-connectbutton.place(x=900, y = 0)
+# Connect to database button
+connectbutton = ttk.Button(root, text='Connect to Database', command=Connectdb)
+connectbutton.place(x=980 , y=20)
+
 # Run the Tkinter main loop
 root.mainloop()
