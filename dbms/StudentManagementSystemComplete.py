@@ -9,7 +9,6 @@ import pymysql
 
 from dbms.example import accentbutton
 
-
 # Function to connect to the database
 def Connectdb():
     def submitdb():
@@ -22,6 +21,9 @@ def Connectdb():
             mycursor = con.cursor()
         except:
             messagebox.showerror('Notifications', 'Data is incorrect please try again', parent=dbroot)
+            connection_status.set("Not Connected")
+            current_host.set("Host: N/A")
+            current_user.set("User: N/A")
             return
         try:
             strr = 'CREATE DATABASE IF NOT EXISTS studentmanagementsystem1'
@@ -41,6 +43,9 @@ def Connectdb():
             mycursor.execute(strr)
             messagebox.showinfo('Notification', 'Database created and now you are connected to the database.',
                                 parent=dbroot)
+            connection_status.set("Connected")
+            current_host.set(f"Host: {host}")
+            current_user.set(f"User: {user}")
 
         except Exception as e:
             messagebox.showerror('Error', f"Error while creating table: {e}", parent=dbroot)
@@ -118,7 +123,6 @@ def addstudent():
     addroot.grab_set()
     addroot.geometry('480x380+100+100')
     addroot.title('Student Management System')
-    addroot.config(bg='white')
     addroot.resizable(False, False)
 
     # Add student labels
@@ -218,7 +222,6 @@ def searchstudent():
     searchroot.grab_set()
     searchroot.geometry('480x380+100+100')
     searchroot.title('Student Management System')
-    searchroot.config(bg='white')
     searchroot.resizable(False, False)
 
     # Search student labels
@@ -364,7 +367,6 @@ def updatestudent():
     updateroot.grab_set()
     updateroot.geometry('480x380+100+100')
     updateroot.title('Student Management System')
-    updateroot.config(bg='white')
     updateroot.resizable(False, False)
 
     original_id = StringVar()  # Variable to store the original student ID
@@ -412,7 +414,6 @@ def showstudent():
             studenttable.insert('', END, values=vv)
     except Exception as e:
         messagebox.showerror('Error', f'Error while fetching data: {e}')
-
 def exportstudent():
     print('Student export')
 def exitstudent():
@@ -421,12 +422,13 @@ def exitstudent():
         root.destroy()
 
 
+
 # Initialize Tkinter window
 root = tk.Tk()
 root.title('Student Management System')
 root.geometry('1150x700+300+10')
 root.resizable(False, False)
-
+root.iconbitmap('icon.ico')
 root.tk.call("source", "forest-dark.tcl")
 ttk.Style().theme_use('forest-dark')
 
@@ -434,19 +436,12 @@ ttk.Style().theme_use('forest-dark')
 ss = 'Student Management System '
 count = 0
 text = ''
-
-
-# Function for the slider effect
-def IntroLabelTick():
-    global count, text
-    if count >= len(ss):
-        count = 0
-        text = ''
-    else:
-        text += ss[count]
-        count += 1
-    SliderLabel.config(text=text)
-    SliderLabel.after(200, IntroLabelTick)
+connection_status = StringVar()
+connection_status.set("Not Connected")
+current_host = StringVar()
+current_host.set("Host: N/A")
+current_user = StringVar()
+current_user.set("User: N/A")
 
 
 #main menu frame
@@ -478,7 +473,7 @@ exitbtn = ttk.Button(DataEntryFrame, text='7. Exit', style='Accent.TButton',comm
 exitbtn.pack(side=TOP, expand=TRUE, fill = BOTH)
 
 # Show Data Frame
-ShowDataFrame = Frame(root, bg='white', relief=GROOVE, borderwidth=2)
+ShowDataFrame = Frame(root, bg='white')
 ShowDataFrame.place(x=350, y=80, width=800, height=550)
 
 # Scrollbars
@@ -514,12 +509,26 @@ studenttable.pack(fill=BOTH, expand=1)
 SliderLabel = ttk.Label(root, text=ss, font=('arial', 30, 'bold'))
 SliderLabel.place(x=290, y=0)
 
-# Start the slider animation
-IntroLabelTick()
-
 # Connect to database button
 connectbutton = ttk.Button(root, text='Connect to Database', style = 'Accent.TButton', command=Connectdb)
 connectbutton.place(x=980 , y=20)
+
+StatusFrame = Frame(root, bg='white', relief=GROOVE)
+StatusFrame.place(x=10, y=5, width=180, height=70)
+
+if(connection_status == "Not Connected"):
+    status_label = ttk.Label(StatusFrame, textvariable=connection_status, font=("Arial", 12,))
+    status_label.pack(side=TOP, expand=TRUE, fill=BOTH)
+else:
+    status_label = ttk.Label(StatusFrame, textvariable=connection_status, font=("Arial", 12))
+    status_label.pack(side=TOP, expand=TRUE, fill=BOTH)
+
+
+host_label = ttk.Label(StatusFrame, textvariable=current_host, font=("Arial", 12))
+host_label.pack(side=TOP, expand=TRUE, fill=BOTH)
+
+user_label = ttk.Label(StatusFrame, textvariable=current_user, font=("Arial", 12))
+user_label.pack(side=TOP, expand=TRUE, fill=BOTH)
 
 # Run the Tkinter main loop
 root.mainloop()
