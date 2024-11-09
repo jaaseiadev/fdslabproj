@@ -7,6 +7,8 @@ import tkinter as tk
 from tkinter import ttk
 import pymysql
 
+from dbms.example import accentbutton
+
 
 # Function to connect to the database
 def Connectdb():
@@ -410,11 +412,9 @@ def showstudent():
             studenttable.insert('', END, values=vv)
     except Exception as e:
         messagebox.showerror('Error', f'Error while fetching data: {e}')
- 
+
 def exportstudent():
     print('Student export')
-
-
 def exitstudent():
     res = messagebox.askyesnocancel('Notification', 'Do you want to exit?')
     if (res == True):
@@ -424,11 +424,11 @@ def exitstudent():
 # Initialize Tkinter window
 root = tk.Tk()
 root.title('Student Management System')
-root.geometry('1175x700+300+10')
+root.geometry('1150x700+300+10')
 root.resizable(False, False)
 
-root.tk.call("source", "forest-light.tcl")
-ttk.Style().theme_use('forest-light')
+root.tk.call("source", "forest-dark.tcl")
+ttk.Style().theme_use('forest-dark')
 
 # Variables for the slider
 ss = 'Student Management System '
@@ -449,41 +449,43 @@ def IntroLabelTick():
     SliderLabel.after(200, IntroLabelTick)
 
 
-# Main frames
-DataEntryFrame = Frame(root, bg='gray', relief=GROOVE, borderwidth=2)
-DataEntryFrame.place(x=10, y=80, width=360, height=550)
+#main menu frame
+DataEntryFrame = Frame(root, bg='gray')
+DataEntryFrame.place(x=10, y=80, width=300, height=550)
 
 frontlabel = Label(DataEntryFrame, text='Main Menu', font=("Arial", 16, "bold"))
 frontlabel.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-addbtn = ttk.Button(DataEntryFrame, text='1. Add Student', command=addstudent)
+addbtn = ttk.Button(DataEntryFrame, text='1. Add Student',  style='Accent.TButton',command=addstudent)
 addbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-searchbtn = ttk.Button(DataEntryFrame, text='2. Search Student', command=searchstudent)
+searchbtn = ttk.Button(DataEntryFrame, text='2. Search Student', style='Accent.TButton',command=searchstudent)
 searchbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-deletebtn = ttk.Button(DataEntryFrame, text='3. Delete Student', command=deletestudent)
+deletebtn = ttk.Button(DataEntryFrame, text='3. Delete Student',style='Accent.TButton', command=deletestudent)
 deletebtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-updatebtn = ttk.Button(DataEntryFrame, text='4. Update Student', command=updatestudent)
+updatebtn = ttk.Button(DataEntryFrame, text='4. Update Student', style='Accent.TButton',command=updatestudent)
 updatebtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-showallbtn = ttk.Button(DataEntryFrame, text='5. Show All', command=showstudent)
+showallbtn = ttk.Button(DataEntryFrame, text='5. Show All',style='Accent.TButton', command=showstudent)
 showallbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-exportbtn = ttk.Button(DataEntryFrame, text='6. Export Data', command=exportstudent)
+exportbtn = ttk.Button(DataEntryFrame, text='6. Export Data',style='Accent.TButton', command=exportstudent)
 exportbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
 
-exitbtn = ttk.Button(DataEntryFrame, text='7. Exit', command=exitstudent)
-exitbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
+exitbtn = ttk.Button(DataEntryFrame, text='7. Exit', style='Accent.TButton',command=exitstudent)
+exitbtn.pack(side=TOP, expand=TRUE, fill = BOTH)
 
 # Show Data Frame
 ShowDataFrame = Frame(root, bg='white', relief=GROOVE, borderwidth=2)
-ShowDataFrame.place(x=450, y=80, width=680, height=550)
+ShowDataFrame.place(x=350, y=80, width=800, height=550)
 
 # Scrollbars
-scroll_x = Scrollbar(ShowDataFrame, orient=HORIZONTAL)
-scroll_y = Scrollbar(ShowDataFrame, orient=VERTICAL)
+
+scroll_x = ttk.Scrollbar(ShowDataFrame, orient=HORIZONTAL)
+scroll_y = ttk.Scrollbar(ShowDataFrame, orient=VERTICAL)
+
 
 studenttable = Treeview(ShowDataFrame, columns=('Student ID', 'Surname', 'First Name', 'Birthdate', 'Sex'),
                         yscrollcommand=scroll_y.set, xscrollcommand=scroll_x.set)
@@ -516,7 +518,7 @@ SliderLabel.place(x=290, y=0)
 IntroLabelTick()
 
 # Connect to database button
-connectbutton = ttk.Button(root, text='Connect to Database', command=Connectdb)
+connectbutton = ttk.Button(root, text='Connect to Database', style = 'Accent.TButton', command=Connectdb)
 connectbutton.place(x=980 , y=20)
 
 # Run the Tkinter main loop
