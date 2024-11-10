@@ -479,16 +479,13 @@ ShowDataFrame.place(x=350, y=80, width=800, height=550)
 
 # Scrollbars
 
-scroll_x = ttk.Scrollbar(ShowDataFrame, orient=HORIZONTAL)
 scroll_y = ttk.Scrollbar(ShowDataFrame, orient=VERTICAL)
 
 
 studenttable = Treeview(ShowDataFrame, columns=('Student ID', 'Surname', 'First Name', 'Birthdate', 'Sex'),
-                        yscrollcommand=scroll_y.set, xscrollcommand=scroll_x.set)
+                        yscrollcommand=scroll_y.set)
 
-scroll_x.pack(side=BOTTOM, fill=X)
 scroll_y.pack(side=RIGHT, fill=Y)
-scroll_x.config(command=studenttable.xview)
 scroll_y.config(command=studenttable.yview)
 
 studenttable.heading('Student ID', text='Student ID')
@@ -508,7 +505,10 @@ studenttable.pack(fill=BOTH, expand=1)
 
 # Slider label
 SliderLabel = ttk.Label(root, text=ss, font=('arial', 30, 'bold'))
-SliderLabel.place(x=290, y=0)
+SliderLabel.place(x=300, y=0)
+sss = "Jaaseia Gian R. Abenoja Laboratory Exercise"
+SliderLabel = ttk.Label(root, text=sss, font=('arial', 7))
+SliderLabel.place(x=470, y=45)
 
 # Connect to database button
 connectbutton = ttk.Button(root, text='Connect to Database', style = 'Accent.TButton', command=Connectdb)
@@ -530,6 +530,8 @@ host_label.pack(side=TOP, expand=TRUE, fill=BOTH)
 
 user_label = ttk.Label(StatusFrame, textvariable=current_user, font=("Arial", 12))
 user_label.pack(side=TOP, expand=TRUE, fill=BOTH)
+
+
 
 # Run the Tkinter main loop
 root.mainloop()
