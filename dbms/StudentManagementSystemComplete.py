@@ -445,11 +445,12 @@ current_user.set("User: N/A")
 
 
 #main menu frame
-DataEntryFrame = Frame(root, bg='gray')
+DataEntryFrame = Frame(root)
 DataEntryFrame.place(x=10, y=80, width=300, height=550)
-
-frontlabel = Label(DataEntryFrame, text='Main Menu', font=("Arial", 16, "bold"))
-frontlabel.pack(side=TOP, expand=TRUE, fill=BOTH)
+border_frame = tk.Frame(root, highlightthickness=1, bd=0)
+border_frame.pack(padx=10, pady=10)
+frontlabel = tk.Label(DataEntryFrame, text='Main Menu', font=("Arial", 20, "bold"))
+frontlabel.pack()
 
 addbtn = ttk.Button(DataEntryFrame, text='1. Add Student',  style='Accent.TButton',command=addstudent)
 addbtn.pack(side=TOP, expand=TRUE, fill=BOTH)
