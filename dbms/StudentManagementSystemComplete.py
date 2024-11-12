@@ -415,7 +415,25 @@ def showstudent():
     except Exception as e:
         messagebox.showerror('Error', f'Error while fetching data: {e}')
 def exportstudent():
-    print('Student export')
+    try:
+        strr = 'SELECT * FROM studentdata1'
+        mycursor.execute(strr)
+        datas = mycursor.fetchall()
+
+        if not datas:
+            messagebox.showinfo('Information', 'No student data available to export.')
+            return
+
+        with open("student_data.txt", "w") as file:
+            file.write("Student ID\tSurname\tFirst Name\tBirthdate\tSex\n")
+            file.write("=" * 50 + "\n")
+            for record in datas:
+                file.write(f"{record[0]}\t{record[1]}\t{record[2]}\t{record[3]}\t{record[4]}\n")
+
+        messagebox.showinfo('Success', 'Data exported successfully to student_data.txt')
+
+    except Exception as e:
+        messagebox.showerror('Error', f'Error while exporting data: {e}')
 def exitstudent():
     res = messagebox.askyesnocancel('Notification', 'Do you want to exit?')
     if (res == True):
