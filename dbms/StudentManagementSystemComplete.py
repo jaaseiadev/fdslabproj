@@ -524,7 +524,7 @@ studenttable.pack(fill=BOTH, expand=1)
 # Slider label
 SliderLabel = ttk.Label(root, text=ss, font=('arial', 30, 'bold'))
 SliderLabel.place(x=300, y=0)
-sss = "Jaaseia Gian R. Abenoja Laboratory Exercise"
+sss = "Jaaseia Gian R. Abenoja FDS Laboratory Exercise "
 SliderLabel = ttk.Label(root, text=sss, font=('arial', 7))
 SliderLabel.place(x=470, y=45)
 
