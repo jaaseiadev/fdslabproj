@@ -89,17 +89,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
-          <line>270</line>
+          <line>284</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
-          <line>436</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
-          <line>460</line>
+          <line>474</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>

@@ -90,6 +90,20 @@ def Connectdb():
     submitbutton.place(x=150, y=190)
 
     dbroot.mainloop()
+
+def apply_sort():
+    sort_option = sort_var.get()
+    if sort_option == "Surname Ascending":
+        print("Sorting by Surname Ascending")
+        # Implement your sorting logic here
+    elif sort_option == "Surname Descending":
+        print("Sorting by Surname Descending")
+        # Implement your sorting logic here
+    elif sort_option == "Birthdate":
+        print("Sorting by Birthdate")
+        # Implement your sorting logic here
+    else:
+        print("No sorting option selected")
 # Function to add a new student
 def addstudent():
     def submitadd():
@@ -441,7 +455,7 @@ def exitstudent():
 
 
 
-# Initialize Tkinter window
+# Initialize Tkinter main  window
 root = tk.Tk()
 root.title('Student Management System')
 root.geometry('1150x700+300+10')
@@ -450,7 +464,7 @@ root.iconbitmap('icon.ico')
 root.tk.call("source", "forest-dark.tcl")
 ttk.Style().theme_use('forest-dark')
 
-# Variables for the slider
+# Variables for the slider thingy
 ss = 'Student Management System '
 count = 0
 text = ''
@@ -530,10 +544,10 @@ SliderLabel.place(x=470, y=45)
 
 # Connect to database button
 connectbutton = ttk.Button(root, text='Connect to Database', style = 'Accent.TButton', command=Connectdb)
-connectbutton.place(x=980 , y=20)
+connectbutton.place(x=135 , y=8)
 
 StatusFrame = Frame(root, bg='white', relief=GROOVE)
-StatusFrame.place(x=10, y=5, width=180, height=70)
+StatusFrame.place(x=10, y=5, width=120, height=70)
 
 if(connection_status == "Not Connected"):
     status_label = ttk.Label(StatusFrame, textvariable=connection_status, font=("Arial", 12,))
@@ -550,6 +564,13 @@ user_label = ttk.Label(StatusFrame, textvariable=current_user, font=("Arial", 12
 user_label.pack(side=TOP, expand=TRUE, fill=BOTH)
 
 
+############sorting
+option_menu_list = ["", "Sort By Default", "Surname (A-Z)", "Surname (Z-A)"]
+e = tk.StringVar(value=option_menu_list[1])
+
+# Read-only Combobox for Sort Options
+optionmenu = ttk.OptionMenu(root, e, *option_menu_list,style = 'Accent.TButton')
+optionmenu.place(x=1020 , y=45)
 
 # Run the Tkinter main loop
 root.mainloop()
