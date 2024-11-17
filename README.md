@@ -110,19 +110,19 @@ The application works by connecting to a MySQL server and upon first connection,
 ![Connect to database ](Screenshots/3.png)
 
 #### Show All / View Students Screen
-![View Students using the Show All Button Screen](screenshots/showall.png)
+![View Students using the Show All Button Screen](Screenshots/showall.png)
 
 #### Add Student Screen
-![Add Student Screen](screenshots/adding.png)
+![Add Student Screen](Screenshots/adding.png)
 
 #### Search Student Screen
-![Add Student Screen](screenshots/search.png)
+![Add Student Screen](Screenshots/search.png)
 
 #### Delete Student Screen
-![Add Student Screen](screenshots/delete.png)
+![Add Student Screen](Screenshots/delete.png)
 
 #### Update Student Screen
-![Add Student Screen](screenshots/updateedit.png)
+![Add Student Screen](Screenshots/updateedit.png)
 
 ## Contributing
 
