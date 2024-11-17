@@ -49,7 +49,7 @@ The purpose of this project is to showcase the integration of MySQL with a GUI a
 
 3. Install the required packages:
     ```sh
-    pip install pymysql
+    pip install PyMySql
     ```
 
 ## Usage
