@@ -484,7 +484,7 @@ sort_var = StringVar(value="Default (ID)")
 
 # Sort Options
 sort_options = ["Default (ID)", "Surname (A-Z)", "Surname (Z-A)", "Birthdate"]
-sort_menu = ttk.OptionMenu(root, sort_var, *sort_options, command=lambda _: apply_sort())
+sort_menu = ttk.OptionMenu(root, sort_var, *sort_options, style='Accent.TButton',command=lambda _: apply_sort())
 sort_menu.place(x=1020, y=45)
 
 #main menu frame
