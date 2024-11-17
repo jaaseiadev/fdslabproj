@@ -93,17 +93,27 @@ def Connectdb():
 
 def apply_sort():
     sort_option = sort_var.get()
-    if sort_option == "Surname Ascending":
-        print("Sorting by Surname Ascending")
-        # Implement your sorting logic here
-    elif sort_option == "Surname Descending":
-        print("Sorting by Surname Descending")
-        # Implement your sorting logic here
-    elif sort_option == "Birthdate":
-        print("Sorting by Birthdate")
-        # Implement your sorting logic here
-    else:
-        print("No sorting option selected")
+    query = 'SELECT * FROM studentdata1'
+
+    try:
+        mycursor.execute(query)
+        data = mycursor.fetchall()
+
+        if sort_option == "Surname (A-Z)":
+            sorted_data = sorted(data, key=lambda x: x[1].lower())
+        elif sort_option == "Surname (Z-A)":
+            sorted_data = sorted(data, key=lambda x: x[1].lower(), reverse=True)
+        elif sort_option == "Birthdate":
+            sorted_data = sorted(data, key=lambda x: x[3])
+        else:  # Default sort (ID)
+            sorted_data = sorted(data, key=lambda x: x[0])
+
+        studenttable.delete(*studenttable.get_children())
+        for student in sorted_data:
+            studenttable.insert('', 'end', values=student)
+
+    except Exception as e:
+        messagebox.showerror('Error', f"Error while sorting data: {e}")
 # Function to add a new student
 def addstudent():
     def submitadd():
@@ -416,16 +426,13 @@ def updatestudent():
 #Show the tables
 def showstudent():
     try:
-        strr = 'SELECT * FROM studentdata1'
-        mycursor.execute(strr)
+        mycursor.execute('SELECT * FROM studentdata1')
         datas = mycursor.fetchall()
         studenttable.delete(*studenttable.get_children())
-        if not datas:
-            messagebox.showinfo('Information', 'No student data available in the database.')
-            return
         for i in datas:
             vv = [i[0], i[1], i[2], i[3], i[4]]
-            studenttable.insert('', END, values=vv)
+            studenttable.insert('', 'end', values=vv)
+        apply_sort()
     except Exception as e:
         messagebox.showerror('Error', f'Error while fetching data: {e}')
 def exportstudent():
@@ -473,8 +480,12 @@ connection_status.set("Not Connected")
 current_host = StringVar()
 current_host.set("Host: N/A")
 current_user = StringVar()
-current_user.set("User: N/A")
+sort_var = StringVar(value="Default (ID)")
 
+# Sort Options
+sort_options = ["Default (ID)", "Surname (A-Z)", "Surname (Z-A)", "Birthdate"]
+sort_menu = ttk.OptionMenu(root, sort_var, *sort_options, command=lambda _: apply_sort())
+sort_menu.place(x=1020, y=45)
 
 #main menu frame
 DataEntryFrame = Frame(root)
@@ -565,12 +576,7 @@ user_label.pack(side=TOP, expand=TRUE, fill=BOTH)
 
 
 ############sorting
-option_menu_list = ["", "Sort By Default", "Surname (A-Z)", "Surname (Z-A)"]
-e = tk.StringVar(value=option_menu_list[1])
 
-# Read-only Combobox for Sort Options
-optionmenu = ttk.OptionMenu(root, e, *option_menu_list,style = 'Accent.TButton')
-optionmenu.place(x=1020 , y=45)
 
 # Run the Tkinter main loop
 root.mainloop()

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="hehe">
+    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Add sorting functionality and update UI elements&#10;&#10;Implemented the sorting functionality for student records allowing sorting by surname and birthdate. Updated the placement of the database connection button and status frame to improve UI layout. Modified breakpoint lines in the workspace configuration for better debugging.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" afterDir="false" />
     </list>
@@ -50,6 +50,7 @@
     &quot;Python.kk.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
@@ -77,12 +78,22 @@
       <option name="project" value="LOCAL" />
       <updated>1731030961728</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add sorting functionality and update UI elements&#10;&#10;Implemented the sorting functionality for student records allowing sorting by surname and birthdate. Updated the placement of the database connection button and status frame to improve UI layout. Modified breakpoint lines in the workspace configuration for better debugging.">
+      <option name="closed" value="true" />
+      <created>1731770678197</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731770678197</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="hehe" />
-    <option name="LAST_COMMIT_MESSAGE" value="hehe" />
+    <MESSAGE value="finally implemented the sort button lol" />
+    <MESSAGE value="Add sorting functionality and update UI elements&#10;&#10;Implemented the sorting functionality for student records allowing sorting by surname and birthdate. Updated the placement of the database connection button and status frame to improve UI layout. Modified breakpoint lines in the workspace configuration for better debugging." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add sorting functionality and update UI elements&#10;&#10;Implemented the sorting functionality for student records allowing sorting by surname and birthdate. Updated the placement of the database connection button and status frame to improve UI layout. Modified breakpoint lines in the workspace configuration for better debugging." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -96,6 +107,11 @@
           <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
           <line>474</line>
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
+          <line>93</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
