@@ -87,7 +87,7 @@ def Connectdb():
     passwordentry.place(x=250, y=130)
 
     # Connectdb Button
-    submitbutton = ttk.Button(dbroot, text='Submit', command=submitdb)
+    submitbutton = ttk.Button(dbroot, text='Submit',style='Accent.TButton' ,command=submitdb)
     submitbutton.place(x=170, y=190)
 
     dbroot.mainloop()
@@ -174,7 +174,7 @@ def addstudent():
     addressentry.place(x=250, y=310)
 
     # Submit button
-    submitbtn = ttk.Button(addroot, text='Submit', command=submitadd)
+    submitbtn = ttk.Button(addroot, text='Submit', style='Accent.TButton',command=submitadd)
     submitbtn.place(x=170, y=360)
 
     addroot.mainloop()
@@ -269,7 +269,7 @@ def searchstudent():
     addressentry.place(x=250, y=310)
 
     # Search button
-    submitbtn = ttk.Button(searchroot, text='Search', command=search)
+    submitbtn = ttk.Button(searchroot, text='Search', style='Accent.TButton',command=search)
     submitbtn.place(x=160, y=360)
 
     searchroot.mainloop()
@@ -406,7 +406,7 @@ def updatestudent():
     ttk.Entry(updateroot, textvariable=addressval).place(x=250, y=310)
 
     # Update button
-    update_button = ttk.Button(updateroot, text='Update', command=update)
+    update_button = ttk.Button(updateroot, text='Update', style='Accent.TButton', command=update)
     update_button.place(x=170, y=370)
 
     # Check if a student is selected before enabling the 'Update' button
@@ -503,7 +503,7 @@ def apply_sort():
 
 
 # Change sort menu options
-sort_options = ["Sort by......", "Surname (A-Z)", "Surname (Z-A)", "Default ( ID )"]
+sort_options = ["Sort by Default", "Surname (A-Z)", "Surname (Z-A)", "Default ( ID )"]
 sort_menu = ttk.OptionMenu(root, sort_var, *sort_options, style='Accent.TButton', command=lambda _: apply_sort())
 sort_menu.place(x=1010, y=45)
 

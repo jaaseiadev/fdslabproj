@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Add accent style to sort menu button&#10;&#10;Updated the sort options dropdown to include an accent button style. This enhances the visual consistency and user interface aesthetics of the Student Management System. Also made minor adjustments to breakpoints and workspace configurations for better debugging and consistency.">
+    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbms/example.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +102,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731858166912</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout.">
+      <option name="closed" value="true" />
+      <created>1731868435584</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731868435584</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout.">
+      <option name="closed" value="true" />
+      <created>1731868887486</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1731868887486</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -124,20 +139,31 @@
     <MESSAGE value="Add sorting functionality and update UI elements&#10;&#10;Implemented the sorting functionality for student records allowing sorting by surname and birthdate. Updated the placement of the database connection button and status frame to improve UI layout. Modified breakpoint lines in the workspace configuration for better debugging." />
     <MESSAGE value="Add sorting functionality for student records&#10;&#10;Implemented sorting by surname (A-Z, Z-A) and birthdate in the student management system. Enhanced the user interface with a dropdown menu for sorting options, and integrated the sorting logic into the data fetching function. Updated workspace configuration to reflect these changes." />
     <MESSAGE value="Add accent style to sort menu button&#10;&#10;Updated the sort options dropdown to include an accent button style. This enhances the visual consistency and user interface aesthetics of the Student Management System. Also made minor adjustments to breakpoints and workspace configurations for better debugging and consistency." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add accent style to sort menu button&#10;&#10;Updated the sort options dropdown to include an accent button style. This enhances the visual consistency and user interface aesthetics of the Student Management System. Also made minor adjustments to breakpoints and workspace configurations for better debugging and consistency." />
+    <MESSAGE value="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
-          <line>161</line>
+          <line>162</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
-          <line>406</line>
+          <line>410</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
+          <line>323</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
+          <line>322</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
