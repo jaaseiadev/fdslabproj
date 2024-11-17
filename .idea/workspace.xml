@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" afterDir="false" />
+    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Add screenshots, CSV export, and accent button styling&#10;&#10;Uploaded new screenshots under the Screenshots directory for better documentation. Enhanced the Student Management System by adding CSV export functionality, new accent styles for buttons, and various UI improvements. Updated workspace configurations to reflect these changes and ensure better debugging support.">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731868887486</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add screenshots, CSV export, and accent button styling&#10;&#10;Uploaded new screenshots under the Screenshots directory for better documentation. Enhanced the Student Management System by adding CSV export functionality, new accent styles for buttons, and various UI improvements. Updated workspace configurations to reflect these changes and ensure better debugging support.">
+      <option name="closed" value="true" />
+      <created>1731870184837</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731870184837</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -140,7 +147,8 @@
     <MESSAGE value="Add sorting functionality for student records&#10;&#10;Implemented sorting by surname (A-Z, Z-A) and birthdate in the student management system. Enhanced the user interface with a dropdown menu for sorting options, and integrated the sorting logic into the data fetching function. Updated workspace configuration to reflect these changes." />
     <MESSAGE value="Add accent style to sort menu button&#10;&#10;Updated the sort options dropdown to include an accent button style. This enhances the visual consistency and user interface aesthetics of the Student Management System. Also made minor adjustments to breakpoints and workspace configurations for better debugging and consistency." />
     <MESSAGE value="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout." />
+    <MESSAGE value="Add screenshots, CSV export, and accent button styling&#10;&#10;Uploaded new screenshots under the Screenshots directory for better documentation. Enhanced the Student Management System by adding CSV export functionality, new accent styles for buttons, and various UI improvements. Updated workspace configurations to reflect these changes and ensure better debugging support." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add screenshots, CSV export, and accent button styling&#10;&#10;Uploaded new screenshots under the Screenshots directory for better documentation. Enhanced the Student Management System by adding CSV export functionality, new accent styles for buttons, and various UI improvements. Updated workspace configurations to reflect these changes and ensure better debugging support." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
