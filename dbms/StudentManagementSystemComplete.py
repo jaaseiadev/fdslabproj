@@ -6,8 +6,8 @@ import tkinter as tk
 import tkinter as tk
 from tkinter import ttk
 import pymysql
+import csv
 
-from dbms.example import accentbutton
 
 # Function to connect to the database
 def Connectdb():
@@ -19,8 +19,8 @@ def Connectdb():
         try:
             con = pymysql.connect(host=host, user=user, password=password)
             mycursor = con.cursor()
-        except:
-            messagebox.showerror('Notifications', 'Data is incorrect please try again', parent=dbroot)
+        except Exception as e:
+            messagebox.showerror('Notifications', f'Data is incorrect please try again: {e}', parent=dbroot)
             connection_status.set("Not Connected")
             current_host.set("Host: N/A")
             current_user.set("User: N/A")
@@ -35,8 +35,9 @@ def Connectdb():
                    studid VARCHAR(10) NOT NULL,
                    surname VARCHAR(20),
                    firstname VARCHAR(20),
-                   birthdate CHAR(8),
+                   birthdate CHAR(10),
                    sex CHAR(1),
+                   address VARCHAR(255),
                    PRIMARY KEY (studid)
                )
                '''
@@ -55,7 +56,7 @@ def Connectdb():
 
     dbroot = Toplevel()
     dbroot.grab_set()
-    dbroot.geometry('470x250+800+230')
+    dbroot.geometry('450x250+800+50')
     dbroot.resizable(False, False)
 
     # Connectdb Labels
@@ -87,33 +88,10 @@ def Connectdb():
 
     # Connectdb Button
     submitbutton = ttk.Button(dbroot, text='Submit', command=submitdb)
-    submitbutton.place(x=150, y=190)
+    submitbutton.place(x=170, y=190)
 
     dbroot.mainloop()
 
-def apply_sort():
-    sort_option = sort_var.get()
-    query = 'SELECT * FROM studentdata1'
-
-    try:
-        mycursor.execute(query)
-        data = mycursor.fetchall()
-
-        if sort_option == "Surname (A-Z)":
-            sorted_data = sorted(data, key=lambda x: x[1].lower())
-        elif sort_option == "Surname (Z-A)":
-            sorted_data = sorted(data, key=lambda x: x[1].lower(), reverse=True)
-        elif sort_option == "Birthdate":
-            sorted_data = sorted(data, key=lambda x: x[3])
-        else:  # Default sort (ID)
-            sorted_data = sorted(data, key=lambda x: x[0])
-
-        studenttable.delete(*studenttable.get_children())
-        for student in sorted_data:
-            studenttable.insert('', 'end', values=student)
-
-    except Exception as e:
-        messagebox.showerror('Error', f"Error while sorting data: {e}")
 # Function to add a new student
 def addstudent():
     def submitadd():
@@ -122,14 +100,15 @@ def addstudent():
         firstname = firstnameval.get()
         birthdate = birthdateval.get()
         sex = sexval.get()
-        if id == "" or surname == "" or firstname == "" or birthdate == "" or sex == "":
+        address = addressval.get()
+        if id == "" or surname == "" or firstname == "" or birthdate == "" or sex == "" or address == "":
             messagebox.showerror('Error', 'All fields are required', parent=addroot)
             return
 
         try:
-            # Insert data into the studentdata1 table
-            strr = 'INSERT INTO studentdata1 (studid, surname, firstname, birthdate, sex) VALUES (%s, %s, %s, %s, %s)'
-            mycursor.execute(strr, (id, surname, firstname, birthdate, sex))
+            # Adjust the INSERT statement to reflect the actual columns in your database scheme
+            strr = 'INSERT INTO studentdata1 (studid, surname, firstname, birthdate, sex, address) VALUES (%s, %s, %s, %s, %s, %s)'
+            mycursor.execute(strr, (id, surname, firstname, birthdate, sex, address))
             con.commit()
             messagebox.showinfo('Notification', 'Student data added successfully', parent=addroot)
             addroot.destroy()
@@ -140,12 +119,12 @@ def addstudent():
         datas = mycursor.fetchall()
         studenttable.delete(*studenttable.get_children())
         for i in datas:
-            vv = [i[0], i[1], i[2], i[3], i[4]]
+            vv = list(i)  # Handles any number of columns returned
             studenttable.insert('', END, values=vv)
 
     addroot = Toplevel(master=DataEntryFrame)
     addroot.grab_set()
-    addroot.geometry('480x380+100+100')
+    addroot.geometry('430x420+100+100')
     addroot.title('Student Management System')
     addroot.resizable(False, False)
 
@@ -165,12 +144,16 @@ def addstudent():
     sexlabel = ttk.Label(addroot, text='Enter Sex:')
     sexlabel.place(x=10, y=250)
 
+    addresslabel = ttk.Label(addroot, text='Enter Address:')
+    addresslabel.place(x=10, y=310)
+
     # Student Entry fields
     idval = StringVar()
     surnameval = StringVar()
     firstnameval = StringVar()
     birthdateval = StringVar()
     sexval = StringVar()
+    addressval = StringVar()
 
     identry = ttk.Entry(addroot, textvariable=idval)
     identry.place(x=250, y=10)
@@ -187,11 +170,15 @@ def addstudent():
     sexentry = ttk.Entry(addroot, textvariable=sexval)
     sexentry.place(x=250, y=250)
 
+    addressentry = ttk.Entry(addroot, textvariable=addressval)
+    addressentry.place(x=250, y=310)
+
     # Submit button
     submitbtn = ttk.Button(addroot, text='Submit', command=submitadd)
-    submitbtn.place(x=160, y=310)
+    submitbtn.place(x=170, y=360)
 
     addroot.mainloop()
+
 # Function to search for a student
 def searchstudent():
     def search():
@@ -200,51 +187,39 @@ def searchstudent():
         firstname = firstnameval.get()
         birthdate = birthdateval.get()
         sex = sexval.get()
-        if (id != ''):
-            strr = 'SELECT * FROM studentdata1 where studid=%s'
-            mycursor.execute(strr, (id,))
-            datas = mycursor.fetchall()
-            studenttable.delete(*studenttable.get_children())
-            for i in datas:
-                vv = [i[0], i[1], i[2], i[3], i[4]]
-                studenttable.insert('', END, values=vv)
-        elif (surname != ''):
-            strr = 'SELECT * FROM studentdata1 where surname=%s'
-            mycursor.execute(strr, (surname,))
-            datas = mycursor.fetchall()
-            studenttable.delete(*studenttable.get_children())
-            for i in datas:
-                vv = [i[0], i[1], i[2], i[3], i[4]]
-                studenttable.insert('', END, values=vv)
-        elif (firstname != ''):
-            strr = 'SELECT * FROM studentdata1 where firstname=%s'
-            mycursor.execute(strr, (firstname,))
-            datas = mycursor.fetchall()
-            studenttable.delete(*studenttable.get_children())
-            for i in datas:
-                vv = [i[0], i[1], i[2], i[3], i[4]]
-                studenttable.insert('', END, values=vv)
-        elif (birthdate != ''):
-            strr = 'SELECT * FROM studentdata1 where birthdate=%s'
-            mycursor.execute(strr, (birthdate,))
-            datas = mycursor.fetchall()
-            studenttable.delete(*studenttable.get_children())
-            for i in datas:
-                vv = [i[0], i[1], i[2], i[3], i[4]]
-                studenttable.insert('', END, values=vv)
-        elif (sex != ''):
-            strr = 'SELECT * FROM studentdata1 where sex=%s'
-            mycursor.execute(strr, (sex,))
-            datas = mycursor.fetchall()
-            studenttable.delete(*studenttable.get_children())
-            for i in datas:
-                vv = [i[0], i[1], i[2], i[3], i[4]]
-                studenttable.insert('', END, values=vv)
+        address = addressval.get()
 
+        if id != '':
+            strr = 'SELECT * FROM studentdata1 WHERE studid=%s'
+            mycursor.execute(strr, (id,))
+        elif surname != '':
+            strr = 'SELECT * FROM studentdata1 WHERE surname=%s'
+            mycursor.execute(strr, (surname,))
+        elif firstname != '':
+            strr = 'SELECT * FROM studentdata1 WHERE firstname=%s'
+            mycursor.execute(strr, (firstname,))
+        elif birthdate != '':
+            strr = 'SELECT * FROM studentdata1 WHERE birthdate=%s'
+            mycursor.execute(strr, (birthdate,))
+        elif sex != '':
+            strr = 'SELECT * FROM studentdata1 WHERE sex=%s'
+            mycursor.execute(strr, (sex,))
+        elif address != '':
+            strr = 'SELECT * FROM studentdata1 WHERE address=%s'
+            mycursor.execute(strr, (address,))
+        else:
+            messagebox.showerror('Error', 'At least one field must be filled', parent=searchroot)
+            return
+
+        datas = mycursor.fetchall()
+        studenttable.delete(*studenttable.get_children())
+        for i in datas:
+            vv = [i[0], i[1], i[2], i[3], i[4], i[5]]
+            studenttable.insert('', END, values=vv)
 
     searchroot = Toplevel(master=DataEntryFrame)
     searchroot.grab_set()
-    searchroot.geometry('480x380+100+100')
+    searchroot.geometry('430x420+100+100')
     searchroot.title('Student Management System')
     searchroot.resizable(False, False)
 
@@ -264,12 +239,16 @@ def searchstudent():
     sexlabel = ttk.Label(searchroot, text='Enter Sex:')
     sexlabel.place(x=10, y=250)
 
+    addresslabel = ttk.Label(searchroot, text='Enter Address:')
+    addresslabel.place(x=10, y=310)
+
     # Student entry fields
     idval = StringVar()
     surnameval = StringVar()
     firstnameval = StringVar()
     birthdateval = StringVar()
     sexval = StringVar()
+    addressval = StringVar()
 
     identry = ttk.Entry(searchroot, textvariable=idval)
     identry.place(x=250, y=10)
@@ -286,11 +265,15 @@ def searchstudent():
     sexentry = ttk.Entry(searchroot, textvariable=sexval)
     sexentry.place(x=250, y=250)
 
+    addressentry = ttk.Entry(searchroot, textvariable=addressval)
+    addressentry.place(x=250, y=310)
+
     # Search button
     submitbtn = ttk.Button(searchroot, text='Search', command=search)
-    submitbtn.place(x=160, y=310)
+    submitbtn.place(x=160, y=360)
 
     searchroot.mainloop()
+
 # Delete Function
 def deletestudent():
     try:
@@ -335,6 +318,7 @@ def deletestudent():
         messagebox.showerror('Error', f'Error while deleting data: {e}')
     except Exception as e:
         messagebox.showerror('Error', f'An unexpected error occurred: {e}')
+
 #Update Function
 def updatestudent():
     def update():
@@ -344,16 +328,17 @@ def updatestudent():
         firstname = firstnameval.get()
         birthdate = birthdateval.get()
         sex = sexval.get()
+        address = addressval.get()
 
         if not new_id:
             messagebox.showerror('Error', 'Student ID cannot be empty', parent=updateroot)
             return
 
         try:
-            strr = 'UPDATE studentdata1 SET studid=%s, surname=%s, firstname=%s, birthdate=%s, sex=%s WHERE studid=%s'
-            mycursor.execute(strr, (new_id, surname, firstname, birthdate, sex, old_id))
+            strr = 'UPDATE studentdata1 SET studid=%s, surname=%s, firstname=%s, birthdate=%s, sex=%s, address=%s WHERE studid=%s'
+            mycursor.execute(strr, (new_id, surname, firstname, birthdate, sex, address, old_id))
             con.commit()
-            messagebox.showinfo('Notifications', 'StudentID {} updated successfully to {}'.format(old_id, new_id))
+            messagebox.showinfo('Notification', 'StudentID {} updated successfully to {}'.format(old_id, new_id))
 
             # Refresh the table
             strr = 'SELECT * FROM studentdata1'
@@ -361,7 +346,7 @@ def updatestudent():
             datas = mycursor.fetchall()
             studenttable.delete(*studenttable.get_children())
             for i in datas:
-                vv = [i[0], i[1], i[2], i[3], i[4]]
+                vv = [i[0], i[1], i[2], i[3], i[4], i[5]]
                 studenttable.insert('', END, values=vv)
         except Exception as e:
             messagebox.showerror('Error', f'Error while updating data: {e}', parent=updateroot)
@@ -377,6 +362,7 @@ def updatestudent():
             firstnameval.set('')
             birthdateval.set('')
             sexval.set('')
+            addressval.set('')
             messagebox.showerror('Error', 'Please select a student to update.', parent=updateroot)
         else:
             update_button.configure(state=tk.NORMAL)
@@ -386,10 +372,11 @@ def updatestudent():
             firstnameval.set(pp[2])
             birthdateval.set(pp[3])
             sexval.set(pp[4])
+            addressval.set(pp[5])  # Set address
 
     updateroot = Toplevel(master=DataEntryFrame)
     updateroot.grab_set()
-    updateroot.geometry('480x380+100+100')
+    updateroot.geometry('430x420+100+100')
     updateroot.title('Student Management System')
     updateroot.resizable(False, False)
 
@@ -401,6 +388,7 @@ def updatestudent():
     ttk.Label(updateroot, text='Enter Firstname:').place(x=10, y=130)
     ttk.Label(updateroot, text='Enter Birthdate:').place(x=10, y=190)
     ttk.Label(updateroot, text='Enter Sex:').place(x=10, y=250)
+    ttk.Label(updateroot, text='Enter Address:').place(x=10, y=310)
 
     # Student entry fields
     idval = StringVar()
@@ -408,21 +396,24 @@ def updatestudent():
     firstnameval = StringVar()
     birthdateval = StringVar()
     sexval = StringVar()
+    addressval = StringVar()
 
     ttk.Entry(updateroot, textvariable=idval).place(x=250, y=10)
     ttk.Entry(updateroot, textvariable=surnameval).place(x=250, y=70)
     ttk.Entry(updateroot, textvariable=firstnameval).place(x=250, y=130)
     ttk.Entry(updateroot, textvariable=birthdateval).place(x=250, y=190)
     ttk.Entry(updateroot, textvariable=sexval).place(x=250, y=250)
+    ttk.Entry(updateroot, textvariable=addressval).place(x=250, y=310)
 
     # Update button
     update_button = ttk.Button(updateroot, text='Update', command=update)
-    update_button.place(x=160, y=310)
+    update_button.place(x=170, y=370)
 
     # Check if a student is selected before enabling the 'Update' button
     check_selection()
 
     updateroot.mainloop()
+
 #Show the tables
 def showstudent():
     try:
@@ -435,6 +426,8 @@ def showstudent():
         apply_sort()
     except Exception as e:
         messagebox.showerror('Error', f'Error while fetching data: {e}')
+
+#Export to a csv file function
 def exportstudent():
     try:
         strr = 'SELECT * FROM studentdata1'
@@ -445,16 +438,20 @@ def exportstudent():
             messagebox.showinfo('Information', 'No student data available to export.')
             return
 
-        with open("student_data.txt", "w") as file:
-            file.write("Student ID\tSurname\tFirst Name\tBirthdate\tSex\n")
-            file.write("=" * 50 + "\n")
+        with open("student_data.csv", "w", newline='') as file:
+            writer = csv.writer(file)
+            # Writing the header
+            writer.writerow(["Student ID", "Surname", "First Name", "Birthdate", "Sex", "Address"])
+            # Writing the data
             for record in datas:
-                file.write(f"{record[0]}\t{record[1]}\t{record[2]}\t{record[3]}\t{record[4]}\n")
+                writer.writerow(record)
 
-        messagebox.showinfo('Success', 'Data exported successfully to student_data.txt')
+        messagebox.showinfo('Success', 'Data exported successfully to student_data.csv')
 
     except Exception as e:
         messagebox.showerror('Error', f'Error while exporting data: {e}')
+
+#Exits the code
 def exitstudent():
     res = messagebox.askyesnocancel('Notification', 'Do you want to exit?')
     if (res == True):
@@ -471,7 +468,7 @@ root.iconbitmap('icon.ico')
 root.tk.call("source", "forest-dark.tcl")
 ttk.Style().theme_use('forest-dark')
 
-# Variables for the slider thingy
+# Variables for the header, title
 ss = 'Student Management System '
 count = 0
 text = ''
@@ -483,9 +480,32 @@ current_user = StringVar()
 sort_var = StringVar(value="Default (ID)")
 
 # Sort Options
-sort_options = ["Default (ID)", "Surname (A-Z)", "Surname (Z-A)", "Birthdate"]
-sort_menu = ttk.OptionMenu(root, sort_var, *sort_options, style='Accent.TButton',command=lambda _: apply_sort())
-sort_menu.place(x=1020, y=45)
+def apply_sort():
+    sort_option = sort_var.get()
+    query = 'SELECT * FROM studentdata1'
+    try:
+        mycursor.execute(query)
+        data = mycursor.fetchall()
+
+        if sort_option == "Surname (A-Z)":
+            sorted_data = sorted(data, key=lambda x: x[1].lower())
+        elif sort_option == "Surname (Z-A)":
+            sorted_data = sorted(data, key=lambda x: x[1].lower(), reverse=True)
+        else:  # Default sort (Student ID)
+            sorted_data = sorted(data, key=lambda x: x[0])
+
+        studenttable.delete(*studenttable.get_children())
+        for student in sorted_data:
+            studenttable.insert('', 'end', values=student)
+
+    except Exception as e:
+        messagebox.showerror('Error', f"Error while sorting data: {e}")
+
+
+# Change sort menu options
+sort_options = ["Sort by......", "Surname (A-Z)", "Surname (Z-A)", "Default ( ID )"]
+sort_menu = ttk.OptionMenu(root, sort_var, *sort_options, style='Accent.TButton', command=lambda _: apply_sort())
+sort_menu.place(x=1010, y=45)
 
 #main menu frame
 DataEntryFrame = Frame(root)
@@ -523,39 +543,42 @@ ShowDataFrame.place(x=350, y=80, width=800, height=550)
 # Scrollbars
 
 scroll_y = ttk.Scrollbar(ShowDataFrame, orient=VERTICAL)
+scroll_x = ttk.Scrollbar(ShowDataFrame, orient=HORIZONTAL)
 
-
-studenttable = Treeview(ShowDataFrame, columns=('Student ID', 'Surname', 'First Name', 'Birthdate', 'Sex'),
-                        yscrollcommand=scroll_y.set)
-
+studenttable = Treeview(ShowDataFrame, columns=(
+'Student ID', 'Surname', 'First Name', 'Birthdate', 'Sex',  'Address'),
+                        yscrollcommand=scroll_y.set,
+                        xscrollcommand=scroll_x.set)
 scroll_y.pack(side=RIGHT, fill=Y)
-scroll_y.config(command=studenttable.yview)
+scroll_x.pack(side=BOTTOM, fill=X)
 
 studenttable.heading('Student ID', text='Student ID')
 studenttable.heading('Surname', text='Surname')
 studenttable.heading('First Name', text='First Name')
 studenttable.heading('Birthdate', text='Birthdate')
 studenttable.heading('Sex', text='Sex')
+studenttable.heading('Address', text='Address')
 
 studenttable.column('Student ID', width=100)
 studenttable.column('Surname', width=100)
 studenttable.column('First Name', width=100)
 studenttable.column('Birthdate', width=100)
 studenttable.column('Sex', width=100)
+studenttable.column('Address', width=200)
 
 studenttable['show'] = 'headings'
 studenttable.pack(fill=BOTH, expand=1)
 
 # Slider label
 SliderLabel = ttk.Label(root, text=ss, font=('arial', 30, 'bold'))
-SliderLabel.place(x=300, y=0)
+SliderLabel.place(x=330, y=0)
 sss = "Jaaseia Gian R. Abenoja FDS Laboratory Exercise "
 SliderLabel = ttk.Label(root, text=sss, font=('arial', 7))
-SliderLabel.place(x=470, y=45)
+SliderLabel.place(x=480, y=45)
 
 # Connect to database button
 connectbutton = ttk.Button(root, text='Connect to Database', style = 'Accent.TButton', command=Connectdb)
-connectbutton.place(x=135 , y=8)
+connectbutton.place(x=155 , y=8)
 
 StatusFrame = Frame(root, bg='white', relief=GROOVE)
 StatusFrame.place(x=10, y=5, width=120, height=70)
@@ -573,10 +596,6 @@ host_label.pack(side=TOP, expand=TRUE, fill=BOTH)
 
 user_label = ttk.Label(StatusFrame, textvariable=current_user, font=("Arial", 12))
 user_label.pack(side=TOP, expand=TRUE, fill=BOTH)
-
-
-############sorting
-
 
 # Run the Tkinter main loop
 root.mainloop()
