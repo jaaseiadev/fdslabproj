@@ -124,10 +124,3 @@ The application works by connecting to a MySQL server and upon first connection,
 #### Update Student Screen
 ![Add Student Screen](Screenshots/updateedit.png)
 
-## Contributing
-
-If you wish to contribute to this project, please create a pull request or open an issue with a detailed description of the changes.
-
-## License
-
-This project is licensed under the MIT License.
