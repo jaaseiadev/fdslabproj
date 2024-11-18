@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Remove unused script kk.py&#10;&#10;The file kk.py containing a matrix manipulation script has been removed. This script was not being utilized in the project, thus its removal helps reduce unnecessary clutter in the repository.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbms/student_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/dbms/student_data.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

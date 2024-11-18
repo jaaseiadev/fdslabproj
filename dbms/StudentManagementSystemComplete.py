@@ -306,7 +306,7 @@ def deletestudent():
 
         studid_to_delete = pp[0]
 
-        # Ensure the student ID is a valid string and within expected length
+        # Ensure the student ID is a valid string or int
         if not isinstance(studid_to_delete, (str, int)):
             messagebox.showerror('Error', 'Invalid student ID format')
             return
@@ -323,7 +323,7 @@ def deletestudent():
         datas = mycursor.fetchall()
         studenttable.delete(*studenttable.get_children())
         for i in datas:
-            vv = [i[0], i[1], i[2], i[3], i[4]]
+            vv = [i[0], i[1], i[2], i[3], i[4]]  # Assuming i[4] is the address
             studenttable.insert('', END, values=vv)
 
     except IndexError:
