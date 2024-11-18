@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Add screenshots and update workspace config&#10;&#10;Added detailed screenshots to the README for better documentation. Enhanced the Student Management System with CSV export functionality and new accent styles for buttons. Updated workspace configurations to reflect these changes and improve debugging support.">
+    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Remove unused script kk.py&#10;&#10;The file kk.py containing a matrix manipulation script has been removed. This script was not being utilized in the project, thus its removal helps reduce unnecessary clutter in the repository.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +141,23 @@
       <option name="project" value="LOCAL" />
       <updated>1731870811017</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Add field validations and update UI labels&#10;&#10;Introduced validation for empty fields, birthdate format, and sex input. Updated UI labels to specify required formats for birthdate and sex. Fixed minor bugs and improved user interaction messages.">
+      <option name="closed" value="true" />
+      <created>1731903687378</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1731903687378</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Remove unused script kk.py&#10;&#10;The file kk.py containing a matrix manipulation script has been removed. This script was not being utilized in the project, thus its removal helps reduce unnecessary clutter in the repository.">
+      <option name="closed" value="true" />
+      <created>1731903884192</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1731903884192</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -166,27 +181,8 @@
     <MESSAGE value="Remove example.py and update Student Management System&#10;&#10;Deleted the example.py file as it was no longer needed. Enhanced the Student Management System by adding CSV export functionality, an address field in the database, and improvements to error messages and GUI layout." />
     <MESSAGE value="Add screenshots, CSV export, and accent button styling&#10;&#10;Uploaded new screenshots under the Screenshots directory for better documentation. Enhanced the Student Management System by adding CSV export functionality, new accent styles for buttons, and various UI improvements. Updated workspace configurations to reflect these changes and ensure better debugging support." />
     <MESSAGE value="Add screenshots and update workspace config&#10;&#10;Added detailed screenshots to the README for better documentation. Enhanced the Student Management System with CSV export functionality and new accent styles for buttons. Updated workspace configurations to reflect these changes and improve debugging support." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add screenshots and update workspace config&#10;&#10;Added detailed screenshots to the README for better documentation. Enhanced the Student Management System with CSV export functionality and new accent styles for buttons. Updated workspace configurations to reflect these changes and improve debugging support." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
-          <line>424</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
-          <line>337</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py</url>
-          <line>336</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Add field validations and update UI labels&#10;&#10;Introduced validation for empty fields, birthdate format, and sex input. Updated UI labels to specify required formats for birthdate and sex. Fixed minor bugs and improved user interaction messages." />
+    <MESSAGE value="Remove unused script kk.py&#10;&#10;The file kk.py containing a matrix manipulation script has been removed. This script was not being utilized in the project, thus its removal helps reduce unnecessary clutter in the repository." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unused script kk.py&#10;&#10;The file kk.py containing a matrix manipulation script has been removed. This script was not being utilized in the project, thus its removal helps reduce unnecessary clutter in the repository." />
   </component>
 </project>
