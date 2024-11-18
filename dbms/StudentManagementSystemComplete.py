@@ -7,6 +7,7 @@ import tkinter as tk
 from tkinter import ttk
 import pymysql
 import csv
+import re
 
 
 # Function to connect to the database
@@ -101,8 +102,21 @@ def addstudent():
         birthdate = birthdateval.get()
         sex = sexval.get()
         address = addressval.get()
+
+        # Basic validation for empty fields
         if id == "" or surname == "" or firstname == "" or birthdate == "" or sex == "" or address == "":
             messagebox.showerror('Error', 'All fields are required', parent=addroot)
+            return
+
+        # Validate the birthdate format
+        date_pattern = re.compile(r"^(0[1-9]|1[0-2])/[0-2][0-9]|(3[01])/\d{4}$")
+        if not date_pattern.match(birthdate):
+            messagebox.showerror('Error', 'Date must be in format mm/dd/yyyy', parent=addroot)
+            return
+
+        # Validate the sex field
+        if sex not in ['M', 'F']:
+            messagebox.showerror('Error', "Sex must be 'm' or 'f'", parent=addroot)
             return
 
         try:
@@ -120,7 +134,7 @@ def addstudent():
         studenttable.delete(*studenttable.get_children())
         for i in datas:
             vv = list(i)  # Handles any number of columns returned
-            studenttable.insert('', END, values=vv)
+            studenttable.insert('', 'end', values=vv)
 
     addroot = Toplevel(master=DataEntryFrame)
     addroot.grab_set()
@@ -138,10 +152,10 @@ def addstudent():
     firstnamelabel = ttk.Label(addroot, text='Enter Firstname:')
     firstnamelabel.place(x=10, y=130)
 
-    birthdatelabel = ttk.Label(addroot, text='Enter Birthdate:')
+    birthdatelabel = ttk.Label(addroot, text='Enter Birthdate (MM/DD/YYYY):')
     birthdatelabel.place(x=10, y=190)
 
-    sexlabel = ttk.Label(addroot, text='Enter Sex:')
+    sexlabel = ttk.Label(addroot, text='Enter Sex (M/F):')
     sexlabel.place(x=10, y=250)
 
     addresslabel = ttk.Label(addroot, text='Enter Address:')
@@ -174,7 +188,7 @@ def addstudent():
     addressentry.place(x=250, y=310)
 
     # Submit button
-    submitbtn = ttk.Button(addroot, text='Submit', style='Accent.TButton',command=submitadd)
+    submitbtn = ttk.Button(addroot, text='Submit', style='Accent.TButton', command=submitadd)
     submitbtn.place(x=170, y=360)
 
     addroot.mainloop()
@@ -330,15 +344,28 @@ def updatestudent():
         sex = sexval.get()
         address = addressval.get()
 
-        if not new_id:
-            messagebox.showerror('Error', 'Student ID cannot be empty', parent=updateroot)
+        # Basic validation for empty fields
+        if not new_id or not surname or not firstname or not birthdate or not sex or not address:
+            messagebox.showerror('Error', 'All fields are required', parent=updateroot)
+            return
+
+        # Validate the birthdate format
+        date_pattern = re.compile(r"^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}$")
+        if not date_pattern.match(birthdate):
+            messagebox.showerror('Error', 'Date must be in format MM/DD/YYYY', parent=updateroot)
+            return
+
+        # Validate the sex field
+        if sex not in ['M', 'F']:
+            messagebox.showerror('Error', "Sex must be 'M' or 'F'", parent=updateroot)
             return
 
         try:
             strr = 'UPDATE studentdata1 SET studid=%s, surname=%s, firstname=%s, birthdate=%s, sex=%s, address=%s WHERE studid=%s'
             mycursor.execute(strr, (new_id, surname, firstname, birthdate, sex, address, old_id))
             con.commit()
-            messagebox.showinfo('Notification', 'StudentID {} updated successfully to {}'.format(old_id, new_id))
+            messagebox.showinfo('Notification', f'Student ID {old_id} updated successfully to {new_id}',
+                                parent=updateroot)
 
             # Refresh the table
             strr = 'SELECT * FROM studentdata1'
@@ -347,7 +374,7 @@ def updatestudent():
             studenttable.delete(*studenttable.get_children())
             for i in datas:
                 vv = [i[0], i[1], i[2], i[3], i[4], i[5]]
-                studenttable.insert('', END, values=vv)
+                studenttable.insert('', 'end', values=vv)
         except Exception as e:
             messagebox.showerror('Error', f'Error while updating data: {e}', parent=updateroot)
 
@@ -386,8 +413,8 @@ def updatestudent():
     ttk.Label(updateroot, text='Enter ID:').place(x=10, y=10)
     ttk.Label(updateroot, text='Enter Surname:').place(x=10, y=70)
     ttk.Label(updateroot, text='Enter Firstname:').place(x=10, y=130)
-    ttk.Label(updateroot, text='Enter Birthdate:').place(x=10, y=190)
-    ttk.Label(updateroot, text='Enter Sex:').place(x=10, y=250)
+    ttk.Label(updateroot, text='Enter Birthdate (MM/DD/YYYY):').place(x=10, y=190)
+    ttk.Label(updateroot, text='Enter Sex (M/F):').place(x=10, y=250)
     ttk.Label(updateroot, text='Enter Address:').place(x=10, y=310)
 
     # Student entry fields
@@ -413,6 +440,7 @@ def updatestudent():
     check_selection()
 
     updateroot.mainloop()
+
 
 #Show the tables
 def showstudent():
@@ -563,7 +591,7 @@ studenttable.column('Student ID', width=100)
 studenttable.column('Surname', width=100)
 studenttable.column('First Name', width=100)
 studenttable.column('Birthdate', width=100)
-studenttable.column('Sex', width=100)
+studenttable.column('Sex', width=50)
 studenttable.column('Address', width=200)
 
 studenttable['show'] = 'headings'
