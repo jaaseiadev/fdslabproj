@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="Remove unused script kk.py&#10;&#10;The file kk.py containing a matrix manipulation script has been removed. This script was not being utilized in the project, thus its removal helps reduce unnecessary clutter in the repository.">
+    <list default="true" id="b669acf0-9d11-4d6d-b3a0-ffd2d21ea2ef" name="Changes" comment="FINAL FINAL FINAL FINAL Update student ID validation and refresh student data&#10;&#10;The student ID validation logic now accepts integers in addition to strings. Also, the student data CSV file was updated with new and corrected entries to ensure accurate records.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" beforeDir="false" afterPath="$PROJECT_DIR$/dbms/StudentManagementSystemComplete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dbms/student_data.csv" beforeDir="false" afterPath="$PROJECT_DIR$/dbms/student_data.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731903884192</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="FINAL FINAL FINAL FINAL Update student ID validation and refresh student data&#10;&#10;The student ID validation logic now accepts integers in addition to strings. Also, the student data CSV file was updated with new and corrected entries to ensure accurate records.">
+      <option name="closed" value="true" />
+      <created>1731944619664</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1731944619664</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,6 +191,7 @@
     <MESSAGE value="Add screenshots and update workspace config&#10;&#10;Added detailed screenshots to the README for better documentation. Enhanced the Student Management System with CSV export functionality and new accent styles for buttons. Updated workspace configurations to reflect these changes and improve debugging support." />
     <MESSAGE value="Add field validations and update UI labels&#10;&#10;Introduced validation for empty fields, birthdate format, and sex input. Updated UI labels to specify required formats for birthdate and sex. Fixed minor bugs and improved user interaction messages." />
     <MESSAGE value="Remove unused script kk.py&#10;&#10;The file kk.py containing a matrix manipulation script has been removed. This script was not being utilized in the project, thus its removal helps reduce unnecessary clutter in the repository." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove unused script kk.py&#10;&#10;The file kk.py containing a matrix manipulation script has been removed. This script was not being utilized in the project, thus its removal helps reduce unnecessary clutter in the repository." />
+    <MESSAGE value="FINAL FINAL FINAL FINAL Update student ID validation and refresh student data&#10;&#10;The student ID validation logic now accepts integers in addition to strings. Also, the student data CSV file was updated with new and corrected entries to ensure accurate records." />
+    <option name="LAST_COMMIT_MESSAGE" value="FINAL FINAL FINAL FINAL Update student ID validation and refresh student data&#10;&#10;The student ID validation logic now accepts integers in addition to strings. Also, the student data CSV file was updated with new and corrected entries to ensure accurate records." />
   </component>
 </project>
