@@ -30,7 +30,7 @@ The purpose of this project is to showcase the integration of MySQL with a GUI a
 
 ### Prerequisites
 
-- Python 3.11.7
+- Python 3.11.7 or higher
 - MySQL Server
 - `PyMySql` package
 - `tkinter` package (usually comes pre-installed with Python)
@@ -39,12 +39,12 @@ The purpose of this project is to showcase the integration of MySQL with a GUI a
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/fds-project.git
+    git clone https://github.com/jaaseiadev/fdsproj.git
     ```
 
 2. Navigate to the project directory:
     ```sh
-    cd fds-project
+    cd dbms/StudentManagementSystemCompelete,py
     ```
 
 3. Install the required packages:
